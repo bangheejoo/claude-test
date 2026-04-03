@@ -241,9 +241,199 @@
       color: #fff;
       font-weight: 600;
     }
+
+    /* 완료 리스트 버튼 */
+    #btn-history {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: #fff;
+      border: 1px solid #e8dfd2;
+      border-radius: 50px;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      color: #7a6a55;
+      cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      transition: all 0.2s;
+      z-index: 100;
+    }
+    #btn-history:hover { background: #7a6a55; color: #fff; border-color: #7a6a55; }
+    #btn-history .badge {
+      background: #9a8a6e;
+      color: #fff;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      padding: 0.05rem 0.45rem;
+      font-weight: 600;
+    }
+    #btn-history:hover .badge { background: #fff; color: #7a6a55; }
+
+    /* 패널 오버레이 */
+    .panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44,40,37,0.35);
+      z-index: 200;
+    }
+    .panel-overlay.open { display: block; }
+
+    /* 완료 리스트 패널 */
+    .history-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(380px, 92vw);
+      height: 100vh;
+      background: #faf7f2;
+      border-left: 1px solid #e8dfd2;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      z-index: 300;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+    }
+    .history-panel.open { transform: translateX(0); }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 1.6rem 1rem;
+      border-bottom: 1px solid #e8dfd2;
+    }
+    .panel-header h2 {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      color: #9a8a6e;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    #btn-close-panel {
+      background: none;
+      border: none;
+      color: #bbb0a0;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      line-height: 1;
+      border-radius: 4px;
+    }
+    #btn-close-panel:hover { color: #7a6a55; background: none; border: none; }
+
+    .panel-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 1rem 1.6rem 2rem;
+    }
+
+    .panel-empty {
+      text-align: center;
+      color: #c0b5a5;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+      line-height: 1.8;
+    }
+
+    .history-date-group { margin-bottom: 1.6rem; }
+    .history-date-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: #9a8a6e;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .history-item {
+      background: #fff;
+      border: 1px solid #ede6da;
+      border-left: 3px solid #c8b99a;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .history-item-header {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      user-select: none;
+    }
+    .history-item-header:hover { background: #fdf9f4; }
+    .history-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .history-item-quote {
+      font-size: 0.85rem;
+      color: #4a3f35;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .history-item-chevron {
+      color: #c8b99a;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 0.3rem;
+      transition: transform 0.25s;
+    }
+    .history-item.expanded .history-item-chevron { transform: rotate(180deg); }
+    .history-item-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .history-item-author {
+      font-size: 0.75rem;
+      color: #bbb0a0;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .history-item-date {
+      font-size: 0.7rem;
+      color: #c8b99a;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.05em;
+    }
+    .history-item-mission {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      font-size: 0.82rem;
+      color: #7a6a55;
+      line-height: 1.7;
+      border-top: 0px solid #ede6da;
+    }
+    .history-item.expanded .history-item-mission {
+      max-height: 200px;
+      padding: 0.7rem 1rem 0.9rem;
+      border-top-width: 1px;
+    }
   </style>
 </head>
 <body>
+
+  <button id="btn-history">완료 기록 <span class="badge" id="done-badge">0</span></button>
+
+  <div class="panel-overlay" id="panel-overlay"></div>
+  <div class="history-panel" id="history-panel">
+    <div class="panel-header">
+      <h2>완료한 미션</h2>
+      <button id="btn-close-panel">✕</button>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </div>
 
   <h1>명언 모음</h1>
 
@@ -293,9 +483,53 @@
       { text: "가장 어두운 밤도 끝나고, 태양은 다시 떠오른다.", author: "빅토르 위고", info: "작가 (1802–1885)", mission: "힘든 시간을 지나고 있는 주변 사람에게 짧은 응원 메시지를 보내보세요." },
       { text: "꿈을 꿀 수 있다면, 이룰 수도 있다.", author: "월트 디즈니", info: "기업인 (1901–1966)", mission: "이루고 싶은 꿈을 구체적으로 적어보고, 그 꿈에 한 발짝 다가가는 행동을 오늘 하나 해보세요." },
       { text: "나 자신을 아는 것이 모든 지혜의 시작이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "오늘 하루를 마치며 '오늘 나는 어떤 감정을 느꼈는가?'를 일기나 메모로 짧게 기록해보세요." },
+      { text: "인생에서 가장 큰 영광은 넘어지지 않는 것이 아니라, 넘어질 때마다 일어서는 것이다.", author: "넬슨 만델라", info: "남아프리카 대통령 (1918–2013)", mission: "최근 포기했던 일을 한 가지 떠올리고, 다시 시작하기 위한 첫 단계를 오늘 밟아보세요." },
+      { text: "변화를 두려워하지 마라. 변화야말로 인생 최고의 선물이다.", author: "스펜서 존슨", info: "작가 (1938–2017)", mission: "오늘 평소와 다른 루틴 하나를 시도해보세요. 다른 길로 출근하거나 새로운 음식을 먹어보세요." },
+      { text: "남들이 당신을 어떻게 생각하는지는 당신의 일이 아니다.", author: "레지나 브렛", info: "작가·칼럼니스트", mission: "오늘 타인의 시선을 신경 쓰지 않고 하고 싶었던 일을 하나 해보세요." },
+      { text: "잘 웃는 사람이 잘 살 수 있다.", author: "버트런드 러셀", info: "철학자 (1872–1970)", mission: "오늘 크게 웃을 수 있는 영상, 책, 또는 사람을 찾아보세요." },
+      { text: "오늘 할 수 있는 일을 내일로 미루지 마라.", author: "벤저민 프랭클린", info: "정치가·발명가 (1706–1790)", mission: "오늘 반드시 끝내야 할 일 세 가지를 지금 적고, 퇴근 전까지 완료해보세요." },
+      { text: "당신이 가진 것에 감사하라. 그러면 더 많은 것을 갖게 된다.", author: "오프라 윈프리", info: "방송인 (1954–)", mission: "오늘 감사한 것 세 가지를 적어보세요. 아주 작은 것도 괜찮습니다." },
+      { text: "책 읽는 사람은 책 읽지 않는 사람보다 더 오래 산다.", author: "조지 마틴", info: "작가 (1948–)", mission: "오늘 10페이지라도 책을 읽어보세요. 장르는 상관없습니다." },
+      { text: "실패는 성공의 어머니다.", author: "마오쩌둥", info: "정치가 (1893–1976)", mission: "최근 실패 경험에서 배운 점 하나를 메모해보세요. 실패를 교훈으로 바꾸는 연습입니다." },
+      { text: "당신이 멈추지 않는 한 얼마나 천천히 가도 상관없다.", author: "공자", info: "철학자 (기원전 551–479)", mission: "오늘 속도에 집착하지 말고, 완벽하지 않아도 하던 일을 꾸준히 이어가보세요." },
+      { text: "시작이 반이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "계속 미뤄온 일을 오늘 딱 5분만 시작해보세요. 시작하면 계속하게 됩니다." },
+      { text: "진정한 발견의 여행은 새로운 풍경을 찾는 것이 아니라, 새로운 눈을 갖는 것이다.", author: "마르셀 프루스트", info: "작가 (1871–1922)", mission: "오늘 매일 지나치던 풍경이나 사람을 처음 보듯 새롭게 바라봐보세요." },
+      { text: "우리는 우리가 반복하는 것의 결과다. 탁월함은 행동이 아니라 습관이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "오늘부터 딱 하나의 작은 습관을 정하고, 오늘 그것을 실천해보세요." },
+      { text: "남과 비교하지 마라. 당신은 어제의 당신과 비교하면 된다.", author: "조던 피터슨", info: "심리학자·작가 (1962–)", mission: "어제보다 조금이라도 나아진 점 하나를 오늘 스스로 찾아보세요." },
+      { text: "삶이 있는 곳에 희망이 있다.", author: "마르쿠스 툴리우스 키케로", info: "철학자·정치가 (기원전 106–43)", mission: "오늘 힘들더라도 내일을 기대할 수 있는 계획 하나를 세워보세요." },
+      { text: "친절은 세상에서 가장 위대한 지혜다.", author: "랄프 왈도 에머슨", info: "철학자·시인 (1803–1882)", mission: "오늘 주변 사람에게 기대하지 않고 먼저 친절을 베풀어보세요. 작은 것도 충분합니다." },
     ];
 
-    let current = 0;
+    const STORAGE_KEY = 'quote_done';
+    const LAST_KEY   = 'quote_last';
+
+    function today() {
+      return new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. ?/g, '-').replace(/-$/, '');
+    }
+
+    // doneMap: { [index]: "YYYY-MM-DD" | false }
+    function loadDone() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        // 이전 버전 boolean true 값 마이그레이션
+        Object.keys(data).forEach(k => { if (data[k] === true) data[k] = today(); });
+        return data;
+      } catch { return {}; }
+    }
+    function saveDone(obj) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    }
+    let doneMap = loadDone();
+
+    // 랜덤 시작 — 직전에 봤던 것 제외
+    function pickRandom() {
+      const last = parseInt(localStorage.getItem(LAST_KEY) ?? '-1');
+      let next;
+      do { next = Math.floor(Math.random() * quotes.length); } while (next === last && quotes.length > 1);
+      localStorage.setItem(LAST_KEY, next);
+      return next;
+    }
+    let current = pickRandom();
 
     const card = document.getElementById('card');
     const textEl = document.getElementById('quote-text');
@@ -308,9 +542,88 @@
     const btnDone = document.getElementById('btn-done');
 
     btnDone.addEventListener('click', () => {
-      btnDone.classList.toggle('done');
-      btnDone.textContent = btnDone.classList.contains('done') ? '완료 ✓' : '완료';
+      const wasDone = !!doneMap[current];
+      doneMap[current] = wasDone ? false : today();
+      saveDone(doneMap);
+      applyDoneState(!wasDone);
+      updateBadge();
     });
+
+    function applyDoneState(isDone) {
+      btnDone.classList.toggle('done', isDone);
+      btnDone.textContent = isDone ? '완료 ✓' : '완료';
+    }
+
+    function updateBadge() {
+      const count = Object.values(doneMap).filter(Boolean).length;
+      document.getElementById('done-badge').textContent = count;
+    }
+
+    // 완료 패널
+    const overlay = document.getElementById('panel-overlay');
+    const panel   = document.getElementById('history-panel');
+    const panelBody = document.getElementById('panel-body');
+
+    function openPanel() {
+      renderPanel();
+      overlay.classList.add('open');
+      panel.classList.add('open');
+    }
+    function closePanel() {
+      overlay.classList.remove('open');
+      panel.classList.remove('open');
+    }
+
+    function renderPanel() {
+      const entries = Object.entries(doneMap)
+        .filter(([, v]) => v)
+        .sort((a, b) => String(b[1]).localeCompare(String(a[1]))); // 날짜 내림차순
+
+      if (entries.length === 0) {
+        panelBody.innerHTML = '<p class="panel-empty">아직 완료한 미션이 없어요.<br>오늘의 미션을 실천해보세요!</p>';
+        return;
+      }
+
+      // 날짜별 그룹
+      const groups = {};
+      entries.forEach(([idx, date]) => {
+        const key = typeof date === 'string' ? date : today();
+        if (!groups[key]) groups[key] = [];
+        groups[key].push({ idx: parseInt(idx), date: key });
+      });
+
+      panelBody.innerHTML = Object.entries(groups).map(([date, items]) => `
+        <div class="history-date-group">
+          <div class="history-date-label">${date}</div>
+          ${items.map(({ idx }) => `
+            <div class="history-item" data-idx="${idx}">
+              <div class="history-item-header">
+                <div class="history-item-top">
+                  <div class="history-item-quote">${quotes[idx].text}</div>
+                  <div class="history-item-chevron">▼</div>
+                </div>
+                <div class="history-item-meta">
+                  <div class="history-item-author">— ${quotes[idx].author}</div>
+                  <div class="history-item-date">${date}</div>
+                </div>
+              </div>
+              <div class="history-item-mission">🎯 ${quotes[idx].mission}</div>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+
+      // 아코디언 이벤트
+      panelBody.querySelectorAll('.history-item-header').forEach(header => {
+        header.addEventListener('click', () => {
+          header.closest('.history-item').classList.toggle('expanded');
+        });
+      });
+    }
+
+    document.getElementById('btn-history').addEventListener('click', openPanel);
+    document.getElementById('btn-close-panel').addEventListener('click', closePanel);
+    overlay.addEventListener('click', closePanel);
 
     function buildDots() {
       dotsEl.innerHTML = '';
@@ -339,8 +652,7 @@
           infoEl.textContent = q.info;
           missionTextEl.textContent = q.mission;
           counterEl.textContent = `${index + 1} / ${quotes.length}`;
-          btnDone.classList.remove('done');
-          btnDone.textContent = '완료';
+          applyDoneState(!!doneMap[index]);
           updateDots();
           card.classList.remove('fade');
           missionCard.classList.remove('fade');
@@ -351,6 +663,7 @@
         infoEl.textContent = q.info;
         missionTextEl.textContent = q.mission;
         counterEl.textContent = `${index + 1} / ${quotes.length}`;
+        applyDoneState(!!doneMap[index]);
         updateDots();
       }
     }
@@ -363,6 +676,7 @@
     document.getElementById('btn-random').addEventListener('click', () => {
       let next;
       do { next = Math.floor(Math.random() * quotes.length); } while (next === current);
+      localStorage.setItem(LAST_KEY, next);
       goTo(next);
     });
 
@@ -387,7 +701,8 @@
     card.addEventListener('mouseleave', () => { dragging = false; });
 
     buildDots();
-    show(0, false);
+    updateBadge();
+    show(current, false);
   </script>
 </body>
 </html>
