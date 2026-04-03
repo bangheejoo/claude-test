@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>명언 모음</title>
+  <title>이달의 명언</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
@@ -27,410 +23,640 @@
 
     h1 {
       font-size: 0.85rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
+      letter-spacing: 0.15em;
       color: #9a8a6e;
       margin-bottom: 2.5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 600;
     }
 
+    /* ── 명언 카드 ── */
     .quote-card {
-      max-width: 720px;
-      width: 100%;
+      max-width: 720px; width: 100%;
       background: #fff;
-      border: none;
       border-radius: 4px;
       padding: 3rem 3.5rem;
       position: relative;
-      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0,0,0,0.05);
-      transition: opacity 0.4s ease;
+      box-shadow: 0 2px 24px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.05);
+      transition: opacity .4s ease;
     }
-
-    .quote-card.fade {
-      opacity: 0;
-    }
-
+    .quote-card.fade { opacity: 0; }
     .quote-mark {
-      font-size: 7rem;
-      line-height: 0;
-      color: #c8b99a;
-      position: absolute;
-      top: 2.8rem;
-      left: 2.8rem;
-      opacity: 0.5;
+      font-size: 7rem; line-height: 0;
+      color: #c8b99a; opacity: .5;
+      position: absolute; top: 2.8rem; left: 2.8rem;
       font-family: 'Cormorant Garamond', serif;
     }
-
     .quote-text {
-      font-size: 1.45rem;
-      line-height: 1.9;
-      margin-bottom: 2rem;
-      padding-top: 1rem;
-      word-break: keep-all;
-      color: #2c2825;
-      font-weight: 400;
+      font-size: 1.45rem; line-height: 1.9;
+      margin-bottom: 2rem; padding-top: 1rem;
+      word-break: keep-all; color: #2c2825;
     }
-
     .quote-author {
-      font-size: 0.95rem;
-      color: #9a8a6e;
-      font-style: italic;
-      text-align: right;
+      font-size: 1.1rem; color: #9a8a6e;
+      font-style: italic; text-align: right;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
     }
-
     .quote-author span {
-      display: block;
-      font-size: 0.75rem;
-      color: #bbb0a0;
-      font-style: normal;
-      margin-top: 0.2rem;
-      font-family: 'Noto Serif KR', serif;
-      letter-spacing: 0.03em;
+      display: block; font-size: .75rem; color: #bbb0a0;
+      font-style: normal; margin-top: .2rem;
+      font-family: 'Noto Serif KR', serif; letter-spacing: .03em;
     }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 2rem;
+    /* ── 미션 컨테이너 ── */
+    .mission-container {
+      max-width: 720px; width: 100%;
+      margin-top: .8rem;
+      transition: opacity .4s ease;
     }
+    .mission-container.fade { opacity: 0; }
 
-    button {
-      background: none;
-      border: 1px solid #d4c9b8;
-      color: #7a6a55;
-      padding: 0.55rem 1.3rem;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-family: 'Noto Serif KR', serif;
-      transition: all 0.2s;
-    }
-
-    button:hover {
-      background: #7a6a55;
-      border-color: #7a6a55;
-      color: #fff;
-    }
-
-    #btn-random {
-      background: #7a6a55;
-      border-color: #7a6a55;
-      color: #fff;
-      padding: 0.55rem 1.6rem;
-    }
-
-    #btn-random:hover {
-      background: #5e5040;
-    }
-
-    .counter {
-      font-size: 0.78rem;
-      color: #c0b5a5;
-      margin-left: auto;
-      font-family: 'Cormorant Garamond', serif;
-      letter-spacing: 0.05em;
-    }
-
-    .progress-bar-wrap {
-      max-width: 720px;
-      width: 100%;
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .progress-bar-track {
-      flex: 1;
-      height: 3px;
-      background: #e8dfd2;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: #9a8a6e;
-      border-radius: 99px;
-      transition: width 0.4s ease;
-    }
-
-    .progress-label {
-      font-size: 0.75rem;
-      color: #c0b5a5;
-      font-family: 'Cormorant Garamond', serif;
-      white-space: nowrap;
-    }
-
-    .mission-card {
-      max-width: 720px;
-      width: 100%;
+    .mission-row {
       background: #faf7f2;
       border: 1px solid #e8dfd2;
-      border-left: 3px solid #c8b99a;
       border-radius: 4px;
-      padding: 1.2rem 1.8rem;
-      margin-top: 0.8rem;
+      margin-bottom: .5rem;
+      overflow: hidden;
+    }
+    .mission-row-body {
       display: flex;
       align-items: flex-start;
-      gap: 0.9rem;
-      transition: opacity 0.4s ease;
+      gap: .9rem;
+      padding: 1rem 1.4rem;
     }
+    .mission-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem; }
 
-    .mission-card.fade {
-      opacity: 0;
+    .mission-info { flex: 1; }
+    .mission-label-row {
+      display: flex; align-items: center;
+      gap: .5rem; margin-bottom: .3rem;
     }
-
-    .mission-icon {
-      font-size: 1.2rem;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-
     .mission-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      font-size: .68rem; letter-spacing: .1em;
       color: #9a8a6e;
-      margin-bottom: 0.35rem;
-      font-family: 'Cormorant Garamond', serif;
-    }
-
-    .mission-text {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: #4a3f35;
-      word-break: keep-all;
-      font-size: 0.95rem;
-    }
-
-    .mission-done-wrap {
-      margin-left: auto;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    #btn-done {
-      border: 1px solid #d4c9b8;
-      color: #9a8a6e;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.78rem;
-      border-radius: 50px;
-      cursor: pointer;
-      background: none;
-      transition: all 0.2s;
-      white-space: nowrap;
       font-family: 'Noto Serif KR', serif;
-    }
-
-    #btn-done:hover {
-      border-color: #9a8a6e;
-      color: #5e5040;
-    }
-
-    #btn-done.done {
-      background: #9a8a6e;
-      border-color: #9a8a6e;
-      color: #fff;
       font-weight: 600;
     }
+    .difficulty-badge {
+      font-size: .65rem; padding: .1rem .5rem;
+      border-radius: 50px; font-family: 'Noto Serif KR', serif;
+      font-weight: 600;
+    }
+    .diff-easy   { background: #e8f4e8; color: #4a8a4a; }
+    .diff-normal { background: #fff0d8; color: #9a6a20; }
+    .diff-hard   { background: #fde8e8; color: #a04040; }
 
-    /* 완료 리스트 버튼 */
-    #btn-history {
-      position: fixed;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: #fff;
-      border: 1px solid #e8dfd2;
-      border-radius: 50px;
-      padding: 0.45rem 1rem;
-      font-size: 0.8rem;
-      color: #7a6a55;
-      cursor: pointer;
+    .mission-text {
+      font-size: .92rem; line-height: 1.7;
+      color: #4a3f35; word-break: keep-all;
+    }
+    .note-display {
+      font-size: .8rem; color: #9a8a6e;
+      font-style: italic; margin-top: .35rem;
+      line-height: 1.5; display: none;
+    }
+    .note-display::before { content: '"'; }
+    .note-display::after  { content: '"'; }
+
+    .btn-done {
+      flex-shrink: 0;
+      border: 1px solid #d4c9b8; color: #9a8a6e;
+      padding: .3rem .85rem; font-size: .75rem;
+      border-radius: 50px; cursor: pointer;
+      background: none; transition: all .2s;
+      white-space: nowrap; font-family: 'Noto Serif KR', serif;
+      align-self: flex-start; margin-top: .1rem;
+    }
+    .btn-done:hover { border-color: #9a8a6e; color: #5e5040; background: none; }
+    .btn-done.done {
+      background: #9a8a6e; border-color: #9a8a6e;
+      color: #fff; font-weight: 600;
+    }
+    .btn-done.done:hover { background: #7a6a55; border-color: #7a6a55; color: #fff; }
+
+    .btn-select {
+      flex-shrink: 0;
+      border: 1px solid #9a8a6e; color: #7a6a55;
+      padding: .3rem .85rem; font-size: .75rem;
+      border-radius: 50px; cursor: pointer;
+      background: none; transition: all .2s;
+      white-space: nowrap; font-family: 'Noto Serif KR', serif;
+      align-self: flex-start; margin-top: .1rem;
+    }
+    .btn-select:hover { background: #9a8a6e; border-color: #9a8a6e; color: #fff; }
+    .btn-cancel {
+      flex-shrink: 0;
+      border: 1px solid #d4c9b8; color: #bbb0a0;
+      padding: .3rem .85rem; font-size: .75rem;
+      border-radius: 50px; cursor: pointer;
+      background: none; transition: all .2s;
+      white-space: nowrap; font-family: 'Noto Serif KR', serif;
+    }
+    .btn-cancel:hover { border-color: #bbb0a0; color: #7a6a55; }
+    .btn-group-col {
+      display: flex; flex-direction: column;
+      gap: .35rem; align-items: flex-end; flex-shrink: 0;
+    }
+
+    /* 느낀점 영역 */
+    .note-area {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      padding: 0 1.4rem;
+      background: #fdf9f4;
+      border-top: 0px solid #e8dfd2;
+    }
+    .note-area.open {
+      max-height: 300px;
+      padding: .9rem 1.4rem 1rem;
+      border-top-width: 1px;
+    }
+    .note-input-header {
+      font-size: .68rem; letter-spacing: .2em;
+      text-transform: uppercase; color: #9a8a6e;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: .4rem;
+    }
+    .note-textarea {
+      width: 100%;
+      border: 1px solid #d4c9b8; border-radius: 4px;
+      background: #fff; font-size: .88rem;
+      color: #4a3f35; font-family: 'Noto Serif KR', serif;
+      padding: .55rem .8rem; outline: none;
+      resize: none; line-height: 1.6; min-height: 62px;
+    }
+    .note-textarea::placeholder { color: #c0b5a5; }
+    .note-textarea:focus { border-color: #9a8a6e; }
+    .note-input-actions {
+      display: flex; justify-content: flex-end; margin-top: .5rem;
+    }
+    .btn-note-save {
+      background: #9a8a6e; border: none; color: #fff;
+      border-radius: 50px; padding: .32rem 1rem;
+      font-size: .76rem; cursor: pointer;
       font-family: 'Noto Serif KR', serif;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-      transition: all 0.2s;
-      z-index: 100;
+    }
+    .btn-note-save:hover { background: #7a6a55; color: #fff; border: none; }
+
+    .emoji-picker {
+      display: flex; gap: .3rem; flex-wrap: wrap;
+      margin-bottom: .55rem;
+    }
+    .emoji-btn {
+      background: none; border: 1.5px solid transparent;
+      border-radius: 8px; padding: .2rem .3rem;
+      font-size: 1.25rem; cursor: pointer; line-height: 1;
+      transition: border-color .15s, background .15s;
+    }
+    .emoji-btn:hover { border-color: #d4c9b8; background: #faf7f2; }
+    .emoji-btn.selected { border-color: #9a8a6e; background: #f5f0e8; }
+
+    /* ── 프로그레스 바 ── */
+    .progress-bar-wrap {
+      max-width: 720px; width: 100%;
+      margin-top: 1rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .progress-bar-track {
+      flex: 1; height: 3px;
+      background: #e8dfd2; border-radius: 99px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; background: #9a8a6e;
+      border-radius: 99px; transition: width .4s ease;
+    }
+    .progress-label {
+      font-size: .75rem; color: #c0b5a5;
+      font-family: 'Cormorant Garamond', serif; white-space: nowrap;
+    }
+
+    /* ── 컨트롤 ── */
+    .controls {
+      display: flex; align-items: center;
+      gap: 1rem; margin-top: 2rem;
+    }
+    button {
+      background: none; border: 1px solid #d4c9b8;
+      color: #7a6a55; padding: .55rem 1.3rem;
+      border-radius: 50px; cursor: pointer;
+      font-size: .85rem; font-family: 'Noto Serif KR', serif;
+      transition: all .2s;
+    }
+    button:hover { background: #7a6a55; border-color: #7a6a55; color: #fff; }
+    #btn-random {
+      background: #7a6a55; border-color: #7a6a55;
+      color: #fff; padding: .55rem 1.6rem;
+    }
+    #btn-random:hover { background: #5e5040; }
+
+    /* ── 나의 기록 버튼 ── */
+    #btn-history {
+      position: fixed; top: 1.2rem; right: 1.2rem;
+      background: #fff; border: 1px solid #e8dfd2;
+      border-radius: 50px; padding: .45rem 1rem;
+      font-size: .8rem; color: #7a6a55; cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+      display: flex; align-items: center; gap: .4rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      transition: all .2s; z-index: 100;
     }
     #btn-history:hover { background: #7a6a55; color: #fff; border-color: #7a6a55; }
     #btn-history .badge {
-      background: #9a8a6e;
-      color: #fff;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      padding: 0.05rem 0.45rem;
-      font-weight: 600;
+      background: #9a8a6e; color: #fff;
+      border-radius: 50px; font-size: .7rem;
+      padding: .05rem .45rem; font-weight: 600;
     }
     #btn-history:hover .badge { background: #fff; color: #7a6a55; }
 
-    /* 패널 오버레이 */
+    /* ── 패널 ── */
     .panel-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(44,40,37,0.35);
-      z-index: 200;
+      display: none; position: fixed; inset: 0;
+      background: rgba(44,40,37,.35); z-index: 200;
     }
     .panel-overlay.open { display: block; }
-
-    /* 완료 리스트 패널 */
     .history-panel {
-      position: fixed;
-      top: 0; right: 0;
-      width: min(380px, 92vw);
-      height: 100vh;
-      background: #faf7f2;
-      border-left: 1px solid #e8dfd2;
-      box-shadow: -4px 0 24px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
+      position: fixed; top: 0; right: 0;
+      width: min(400px, 94vw); height: 100vh;
+      background: #faf7f2; border-left: 1px solid #e8dfd2;
+      box-shadow: -4px 0 24px rgba(0,0,0,.08);
+      display: flex; flex-direction: column;
       z-index: 300;
       transform: translateX(100%);
-      transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
     }
     .history-panel.open { transform: translateX(0); }
-
     .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 1.6rem 1rem;
+      display: flex; flex-direction: column;
+      padding: 1.2rem 1.6rem 0;
       border-bottom: 1px solid #e8dfd2;
     }
+    .panel-header-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding-bottom: .9rem; width: 100%;
+    }
     .panel-header h2 {
-      font-size: 0.85rem;
-      letter-spacing: 0.3em;
-      color: #9a8a6e;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      text-transform: uppercase;
+      font-size: .85rem; letter-spacing: .3em;
+      color: #9a8a6e; font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; text-transform: uppercase;
     }
     #btn-close-panel {
-      background: none;
-      border: none;
-      color: #bbb0a0;
-      font-size: 1.3rem;
-      cursor: pointer;
-      padding: 0.2rem 0.4rem;
-      line-height: 1;
-      border-radius: 4px;
+      background: none; border: none; color: #bbb0a0;
+      font-size: 1.3rem; cursor: pointer;
+      padding: .2rem .4rem; line-height: 1; border-radius: 4px;
     }
     #btn-close-panel:hover { color: #7a6a55; background: none; border: none; }
-
-    .panel-body {
-      overflow-y: auto;
-      flex: 1;
-      padding: 1rem 1.6rem 2rem;
+    .panel-tabs { display: flex; width: 100%; }
+    .panel-tab {
+      flex: 1; text-align: center; padding: .55rem 0;
+      font-size: .8rem; color: #bbb0a0; cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-family: 'Noto Serif KR', serif;
+      transition: all .2s; user-select: none;
     }
-
+    .panel-tab.active { color: #7a6a55; border-bottom-color: #7a6a55; }
+    .panel-body { overflow-y: auto; flex: 1; padding: 1rem 1.6rem 2rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
     .panel-empty {
-      text-align: center;
-      color: #c0b5a5;
-      font-size: 0.9rem;
-      margin-top: 3rem;
-      line-height: 1.8;
+      text-align: center; color: #c0b5a5;
+      font-size: .9rem; margin-top: 3rem; line-height: 1.8;
     }
 
+    /* 목록 */
     .history-date-group { margin-bottom: 1.6rem; }
     .history-date-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: #9a8a6e;
-      font-family: 'Cormorant Garamond', serif;
-      margin-bottom: 0.6rem;
-      text-transform: uppercase;
+      font-size: .72rem; letter-spacing: .2em;
+      color: #9a8a6e; font-family: 'Cormorant Garamond', serif;
+      margin-bottom: .6rem; text-transform: uppercase;
     }
-
     .history-item {
-      background: #fff;
-      border: 1px solid #ede6da;
-      border-left: 3px solid #c8b99a;
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
-      overflow: hidden;
+      background: #fff; border: 1px solid #ede6da;
+      border-radius: 4px; margin-bottom: .5rem; overflow: hidden;
     }
     .history-item-header {
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      user-select: none;
+      padding: .75rem 1rem; cursor: pointer;
+      display: flex; flex-direction: column;
+      gap: .25rem; user-select: none;
     }
     .history-item-header:hover { background: #fdf9f4; }
     .history-item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.5rem;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: .5rem;
     }
     .history-item-quote {
-      font-size: 0.85rem;
-      color: #4a3f35;
-      line-height: 1.6;
-      flex: 1;
+      font-size: .85rem; color: #4a3f35;
+      line-height: 1.6; flex: 1;
     }
     .history-item-chevron {
-      color: #c8b99a;
-      font-size: 0.7rem;
-      flex-shrink: 0;
-      margin-top: 0.3rem;
-      transition: transform 0.25s;
+      color: #c8b99a; font-size: .7rem;
+      flex-shrink: 0; margin-top: .3rem;
+      transition: transform .25s;
     }
     .history-item.expanded .history-item-chevron { transform: rotate(180deg); }
     .history-item-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .history-item-author {
-      font-size: 0.75rem;
-      color: #bbb0a0;
-      font-style: italic;
-      font-family: 'Cormorant Garamond', serif;
+      font-size: .75rem; color: #bbb0a0;
+      font-style: italic; font-family: 'Cormorant Garamond', serif;
+    }
+    .history-item-right {
+      display: flex; align-items: center; gap: .4rem;
     }
     .history-item-date {
-      font-size: 0.7rem;
-      color: #c8b99a;
-      font-family: 'Cormorant Garamond', serif;
-      letter-spacing: 0.05em;
+      font-size: .7rem; color: #c8b99a;
+      font-family: 'Cormorant Garamond', serif; letter-spacing: .05em;
     }
+    .history-item-note {
+      font-size: .78rem; color: #9a8a6e;
+      font-style: italic; margin-top: .3rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .history-item-note::before { content: '"'; }
+    .history-item-note::after  { content: '"'; }
     .history-item-mission {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 1rem;
-      font-size: 0.82rem;
-      color: #7a6a55;
-      line-height: 1.7;
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s ease, padding .3s ease;
+      padding: 0 1rem; font-size: .82rem;
+      color: #7a6a55; line-height: 1.7;
       border-top: 0px solid #ede6da;
     }
     .history-item.expanded .history-item-mission {
-      max-height: 200px;
-      padding: 0.7rem 1rem 0.9rem;
+      max-height: 200px; padding: .7rem 1rem .9rem;
       border-top-width: 1px;
+    }
+
+    /* 기록 수정 */
+    .btn-hist-edit {
+      border: none; background: none; color: #c8b99a;
+      font-size: .72rem; cursor: pointer; padding: .1rem .3rem;
+      font-family: 'Noto Serif KR', serif; transition: color .15s;
+    }
+    .btn-hist-edit:hover { color: #7a6a55; background: none; border: none; }
+    .history-item-edit {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      padding: 0 1rem; background: #fdf9f4;
+      border-top: 0px solid #ede6da;
+    }
+    .history-item-edit.open {
+      max-height: 260px; padding: .8rem 1rem .9rem;
+      border-top-width: 1px;
+    }
+    .hist-edit-actions {
+      display: flex; justify-content: flex-end;
+      gap: .4rem; margin-top: .5rem;
+    }
+    .btn-hist-save {
+      background: #9a8a6e; border: none; color: #fff;
+      border-radius: 50px; padding: .28rem .9rem;
+      font-size: .74rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+    }
+    .btn-hist-save:hover { background: #7a6a55; border: none; color: #fff; }
+    .btn-hist-cancel-edit {
+      background: none; border: 1px solid #d4c9b8; color: #9a8a6e;
+      border-radius: 50px; padding: .28rem .9rem;
+      font-size: .74rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+    }
+    .btn-hist-cancel-edit:hover { border-color: #9a8a6e; color: #5e5040; background: none; }
+
+    /* 캘린더 */
+    .cal-nav {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 1rem;
+    }
+    .cal-nav-title {
+      font-size: .95rem; color: #4a3f35;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; letter-spacing: .05em;
+    }
+    .cal-nav-btn {
+      background: none; border: 1px solid #e8dfd2;
+      color: #9a8a6e; width: 28px; height: 28px;
+      border-radius: 50%; cursor: pointer;
+      font-size: .8rem; display: flex;
+      align-items: center; justify-content: center; padding: 0;
+    }
+    .cal-nav-btn:hover { background: #f5f0e8; border: 1px solid #e8dfd2; color: #5e5040; }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7,1fr); gap: 3px;
+    }
+    .cal-day-name {
+      text-align: center; font-size: .68rem;
+      color: #bbb0a0; font-family: 'Cormorant Garamond', serif; padding: .3rem 0;
+    }
+    .cal-day-name:first-child { color: #e0856a; }
+    .cal-day-name:last-child  { color: #7a9ae0; }
+    .cal-cell {
+      aspect-ratio: 1; display: flex;
+      align-items: center; justify-content: center;
+      font-size: .78rem; border-radius: 50%;
+      color: #9a8a6e; font-family: 'Cormorant Garamond', serif;
+    }
+    .cal-cell.empty { background: none; }
+    .cal-cell.today { border: 1px solid #c8b99a; color: #7a6a55; font-weight: 600; }
+    .cal-cell.has-mission {
+      background: #9a8a6e; color: #fff;
+      cursor: pointer; font-weight: 600;
+    }
+    .cal-cell.has-mission:hover { background: #7a6a55; }
+    .cal-cell.sun { color: #e0856a; }
+    .cal-cell.has-mission.sun { background: #e0a090; color: #fff; }
+    .cal-stats {
+      margin-top: 1rem; padding: .9rem 1rem;
+      background: #fff; border: 1px solid #ede6da;
+      border-radius: 6px; font-size: .85rem;
+      color: #7a6a55; text-align: center; line-height: 1.7;
+    }
+    .cal-stats .highlight { font-weight: 600; color: #4a3f35; }
+    .cal-congrats {
+      margin-top: .7rem; padding: .8rem 1rem;
+      background: #fdf6e3; border: 1px solid #e8d8a0;
+      border-radius: 6px; font-size: .82rem;
+      color: #8a6f20; text-align: center;
+      line-height: 1.7; display: none;
+    }
+    .cal-congrats.show { display: block; }
+    .cal-detail { margin-top: 1rem; }
+    .cal-detail-date {
+      font-size: .72rem; letter-spacing: .2em;
+      color: #9a8a6e; font-family: 'Cormorant Garamond', serif;
+      margin-bottom: .5rem; text-transform: uppercase;
+    }
+
+    /* ── 연속 달성 축하 ── */
+    .streak-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .streak-msg {
+      background: #fff; border-radius: 20px;
+      padding: 2rem 2.8rem; text-align: center;
+      box-shadow: 0 12px 48px rgba(0,0,0,.18);
+      animation: streakPop .45s cubic-bezier(.34,1.56,.64,1) forwards,
+                 streakFade .45s ease 2.1s forwards;
+    }
+    @keyframes streakPop {
+      from { opacity: 0; transform: scale(.6) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes streakFade {
+      from { opacity: 1; transform: scale(1); }
+      to   { opacity: 0; transform: scale(.9); }
+    }
+    .streak-emoji { font-size: 3.2rem; display: block; margin-bottom: .6rem; }
+    .streak-title {
+      font-size: 1.4rem; font-weight: 600; color: #4a3f35;
+      font-family: 'Cormorant Garamond', serif; letter-spacing: .03em;
+    }
+    .streak-sub {
+      font-size: .88rem; color: #9a8a6e; margin-top: .4rem;
+      font-family: 'Noto Serif KR', serif;
+    }
+    .confetti-piece {
+      position: fixed; top: -12px; border-radius: 3px;
+      animation: confettiFall linear forwards;
+      pointer-events: none; z-index: 9998;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg) scaleX(1); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(680deg) scaleX(-1); opacity: 0; }
+    }
+
+    /* ── 월 대표 명언 선택 모달 ── */
+    .fav-picker-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(44,40,37,.5);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .fav-picker-box {
+      background: #faf7f2; border-radius: 8px;
+      max-width: 560px; width: 100%;
+      max-height: 80vh; display: flex; flex-direction: column;
+      box-shadow: 0 12px 48px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+    .fav-picker-header {
+      padding: 1.6rem 1.8rem 1.2rem;
+      border-bottom: 1px solid #e8dfd2;
+    }
+    .fav-picker-title {
+      font-size: 1rem; font-weight: 600;
+      color: #4a3f35; font-family: 'Cormorant Garamond', serif;
+      letter-spacing: .03em; margin-bottom: .35rem;
+    }
+    .fav-picker-sub {
+      font-size: .8rem; color: #9a8a6e;
+      font-family: 'Noto Serif KR', serif;
+    }
+    .fav-picker-list {
+      overflow-y: auto; padding: .8rem 1.2rem; flex: 1;
+    }
+    .fav-picker-item {
+      background: #fff; border: 1px solid #e8dfd2;
+      border-radius: 6px; padding: 1rem 1.2rem;
+      margin-bottom: .6rem; cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fav-picker-item:hover {
+      border-color: #9a8a6e; box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .fav-picker-quote {
+      font-size: .9rem; line-height: 1.7;
+      color: #2c2825; word-break: keep-all;
+    }
+    .fav-picker-author {
+      font-size: .78rem; color: #bbb0a0;
+      font-style: italic; margin-top: .35rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .fav-picker-actions {
+      padding: .9rem 1.8rem 1.2rem;
+      border-top: 1px solid #e8dfd2; text-align: right;
+    }
+    .fav-picker-skip {
+      border: none; background: none;
+      color: #bbb0a0; font-size: .8rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif; padding: .3rem .6rem;
+    }
+    .fav-picker-skip:hover { color: #7a6a55; background: none; border: none; }
+
+    /* ── 월 대표 명언 카드 (캘린더) ── */
+    .monthly-fav-card {
+      margin-top: 1rem; padding: 1rem 1.2rem;
+      background: #fdf9f4; border: 1px solid #e8d8a0;
+      border-radius: 6px; border-left: 3px solid #c8a060;
+    }
+    .monthly-fav-label {
+      font-size: .7rem; letter-spacing: .2em;
+      text-transform: uppercase; color: #9a6a20;
+      font-family: 'Cormorant Garamond', serif; margin-bottom: .5rem;
+    }
+    .monthly-fav-text {
+      font-size: .9rem; line-height: 1.7;
+      color: #2c2825; word-break: keep-all;
+    }
+    .monthly-fav-author {
+      font-size: .78rem; color: #bbb0a0;
+      font-style: italic; margin-top: .4rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .monthly-fav-pick { margin-top: .8rem; text-align: center; }
+    .btn-pick-fav {
+      border: 1px solid #c8b99a; background: none;
+      color: #9a6a20; font-size: .8rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+      padding: .45rem 1.1rem; border-radius: 50px;
+      transition: all .2s;
+    }
+    .btn-pick-fav:hover { background: #9a6a20; border-color: #9a6a20; color: #fff; }
+
+    /* ── 대표 명언 저장 토스트 ── */
+    .fav-toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      background: #4a3f35; color: #fff; border-radius: 50px;
+      padding: .6rem 1.4rem; font-size: .85rem;
+      font-family: 'Noto Serif KR', serif;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      z-index: 9999; white-space: nowrap;
+      animation: toastIn .3s ease, toastOut .3s ease 2.2s forwards;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <button id="btn-history">완료 기록 <span class="badge" id="done-badge">0</span></button>
+  <button id="btn-history">나의 기록 <span class="badge" id="done-badge">0</span></button>
 
   <div class="panel-overlay" id="panel-overlay"></div>
   <div class="history-panel" id="history-panel">
     <div class="panel-header">
-      <h2>완료한 미션</h2>
-      <button id="btn-close-panel">✕</button>
+      <div class="panel-header-top">
+        <h2>나의 기록</h2>
+        <button id="btn-close-panel">✕</button>
+      </div>
+      <div class="panel-tabs">
+        <div class="panel-tab active" data-tab="list">목록</div>
+        <div class="panel-tab" data-tab="calendar">캘린더</div>
+      </div>
     </div>
-    <div class="panel-body" id="panel-body"></div>
+    <div class="panel-body">
+      <div class="tab-content active" id="tab-list"></div>
+      <div class="tab-content" id="tab-calendar"></div>
+    </div>
   </div>
 
   <h1 id="page-title">이달의 명언</h1>
@@ -444,16 +670,7 @@
     </div>
   </div>
 
-  <div class="mission-card" id="mission-card">
-    <div class="mission-icon">🎯</div>
-    <div>
-      <div class="mission-label">오늘의 미션</div>
-      <div class="mission-text" id="mission-text"></div>
-    </div>
-    <div class="mission-done-wrap">
-      <button id="btn-done">완료</button>
-    </div>
-  </div>
+  <div class="mission-container" id="mission-container"></div>
 
   <div class="progress-bar-wrap">
     <div class="progress-bar-track">
@@ -463,145 +680,840 @@
   </div>
 
   <div class="controls">
-    <button id="btn-random">다른 미션 하기</button>
+    <button id="btn-random">다른 명언 보기</button>
   </div>
 
   <script>
-    const quotes = [
-      { text: "인생은 자전거를 타는 것과 같다. 균형을 잡으려면 계속 움직여야 한다.", author: "알베르트 아인슈타인", info: "물리학자 (1879–1955)", mission: "오늘 10분만 밖에 나가 걷거나 스트레칭을 해보세요. 몸을 움직이는 것이 균형의 시작입니다." },
-      { text: "성공은 열정을 잃지 않고 실패에서 실패로 나아가는 것이다.", author: "윈스턴 처칠", info: "영국 총리 (1874–1965)", mission: "오늘 실패했거나 미뤄왔던 일 하나를 다시 시도해보세요. 결과보다 시도 자체가 중요합니다." },
-      { text: "당신이 할 수 있다고 생각하든, 할 수 없다고 생각하든, 당신이 옳다.", author: "헨리 포드", info: "기업인 (1863–1947)", mission: "오늘 하루, '못 할 것 같다'는 말 대신 '한번 해보자'로 바꿔 말해보세요." },
-      { text: "천 리 길도 한 걸음부터 시작된다.", author: "노자", info: "철학자 (기원전 6세기)", mission: "오래 미뤄온 큰 목표를 떠올리고, 그것의 첫 번째 아주 작은 행동 하나만 오늘 실천해보세요." },
-      { text: "나는 내일 죽을 것처럼 살고, 영원히 살 것처럼 배운다.", author: "마하트마 간디", info: "인도 독립운동 지도자 (1869–1948)", mission: "오늘 평소 관심 있었지만 배우지 못했던 것을 15분이라도 공부해보세요." },
-      { text: "두려움은 앞으로 나아가지 않는 것에서 온다. 앞으로 나아가면 두려움은 사라진다.", author: "베네딕트 쿠퍼버그", info: "작가", mission: "두렵거나 불편해서 피해왔던 연락이나 대화를 오늘 한 번 용기 내어 시작해보세요." },
-      { text: "어제는 역사이고, 내일은 미스터리이며, 오늘은 선물이다.", author: "빌 킨", info: "만화가", mission: "스마트폰을 잠시 내려놓고, 지금 이 순간 주변에 있는 사람이나 풍경에 집중해보세요." },
-      { text: "우리가 알고 있는 것은 한 방울의 물이요, 모르는 것은 바다다.", author: "아이작 뉴턴", info: "물리학자 (1643–1727)", mission: "오늘 '나는 이미 알고 있다'고 생각했던 주제를 다시 검색하거나 책으로 읽어보세요." },
-      { text: "자신을 사랑하는 것이 평생에 걸친 로맨스의 시작이다.", author: "오스카 와일드", info: "작가 (1854–1900)", mission: "오늘 자신에게 칭찬 한 마디를 해주세요. 거울을 보며 소리 내어 말해도 좋습니다." },
-      { text: "지금 하지 않으면 언제 할 것인가?", author: "힐렐", info: "유대 현인 (기원전 110–기원전 10)", mission: "'언젠가 해야지'라고 생각해온 일 목록을 적고, 그중 하나를 오늘 당장 시작해보세요." },
-      { text: "상상력은 지식보다 중요하다.", author: "알베르트 아인슈타인", info: "물리학자 (1879–1955)", mission: "오늘 자유롭게 낙서하거나, 새로운 아이디어를 종이에 제약 없이 적어보세요." },
-      { text: "행복은 목적지가 아니라 여정이다.", author: "랄프 왈도 에머슨", info: "철학자·시인 (1803–1882)", mission: "오늘 결과와 관계없이 그 과정 자체를 즐길 수 있는 일을 하나 선택해서 해보세요." },
-      { text: "가장 어두운 밤도 끝나고, 태양은 다시 떠오른다.", author: "빅토르 위고", info: "작가 (1802–1885)", mission: "힘든 시간을 지나고 있는 주변 사람에게 짧은 응원 메시지를 보내보세요." },
-      { text: "꿈을 꿀 수 있다면, 이룰 수도 있다.", author: "월트 디즈니", info: "기업인 (1901–1966)", mission: "이루고 싶은 꿈을 구체적으로 적어보고, 그 꿈에 한 발짝 다가가는 행동을 오늘 하나 해보세요." },
-      { text: "나 자신을 아는 것이 모든 지혜의 시작이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "오늘 하루를 마치며 '오늘 나는 어떤 감정을 느꼈는가?'를 일기나 메모로 짧게 기록해보세요." },
-      { text: "인생에서 가장 큰 영광은 넘어지지 않는 것이 아니라, 넘어질 때마다 일어서는 것이다.", author: "넬슨 만델라", info: "남아프리카 대통령 (1918–2013)", mission: "최근 포기했던 일을 한 가지 떠올리고, 다시 시작하기 위한 첫 단계를 오늘 밟아보세요." },
-      { text: "변화를 두려워하지 마라. 변화야말로 인생 최고의 선물이다.", author: "스펜서 존슨", info: "작가 (1938–2017)", mission: "오늘 평소와 다른 루틴 하나를 시도해보세요. 다른 길로 출근하거나 새로운 음식을 먹어보세요." },
-      { text: "남들이 당신을 어떻게 생각하는지는 당신의 일이 아니다.", author: "레지나 브렛", info: "작가·칼럼니스트", mission: "오늘 타인의 시선을 신경 쓰지 않고 하고 싶었던 일을 하나 해보세요." },
-      { text: "잘 웃는 사람이 잘 살 수 있다.", author: "버트런드 러셀", info: "철학자 (1872–1970)", mission: "오늘 크게 웃을 수 있는 영상, 책, 또는 사람을 찾아보세요." },
-      { text: "오늘 할 수 있는 일을 내일로 미루지 마라.", author: "벤저민 프랭클린", info: "정치가·발명가 (1706–1790)", mission: "오늘 반드시 끝내야 할 일 세 가지를 지금 적고, 퇴근 전까지 완료해보세요." },
-      { text: "당신이 가진 것에 감사하라. 그러면 더 많은 것을 갖게 된다.", author: "오프라 윈프리", info: "방송인 (1954–)", mission: "오늘 감사한 것 세 가지를 적어보세요. 아주 작은 것도 괜찮습니다." },
-      { text: "책 읽는 사람은 책 읽지 않는 사람보다 더 오래 산다.", author: "조지 마틴", info: "작가 (1948–)", mission: "오늘 10페이지라도 책을 읽어보세요. 장르는 상관없습니다." },
-      { text: "실패는 성공의 어머니다.", author: "마오쩌둥", info: "정치가 (1893–1976)", mission: "최근 실패 경험에서 배운 점 하나를 메모해보세요. 실패를 교훈으로 바꾸는 연습입니다." },
-      { text: "당신이 멈추지 않는 한 얼마나 천천히 가도 상관없다.", author: "공자", info: "철학자 (기원전 551–479)", mission: "오늘 속도에 집착하지 말고, 완벽하지 않아도 하던 일을 꾸준히 이어가보세요." },
-      { text: "시작이 반이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "계속 미뤄온 일을 오늘 딱 5분만 시작해보세요. 시작하면 계속하게 됩니다." },
-      { text: "진정한 발견의 여행은 새로운 풍경을 찾는 것이 아니라, 새로운 눈을 갖는 것이다.", author: "마르셀 프루스트", info: "작가 (1871–1922)", mission: "오늘 매일 지나치던 풍경이나 사람을 처음 보듯 새롭게 바라봐보세요." },
-      { text: "우리는 우리가 반복하는 것의 결과다. 탁월함은 행동이 아니라 습관이다.", author: "아리스토텔레스", info: "철학자 (기원전 384–322)", mission: "오늘부터 딱 하나의 작은 습관을 정하고, 오늘 그것을 실천해보세요." },
-      { text: "남과 비교하지 마라. 당신은 어제의 당신과 비교하면 된다.", author: "조던 피터슨", info: "심리학자·작가 (1962–)", mission: "어제보다 조금이라도 나아진 점 하나를 오늘 스스로 찾아보세요." },
-      { text: "삶이 있는 곳에 희망이 있다.", author: "마르쿠스 툴리우스 키케로", info: "철학자·정치가 (기원전 106–43)", mission: "오늘 힘들더라도 내일을 기대할 수 있는 계획 하나를 세워보세요." },
-      { text: "친절은 세상에서 가장 위대한 지혜다.", author: "랄프 왈도 에머슨", info: "철학자·시인 (1803–1882)", mission: "오늘 주변 사람에게 기대하지 않고 먼저 친절을 베풀어보세요. 작은 것도 충분합니다." },
-    ];
+  const DIFFS = [
+    { key: 'easy',   label: '쉬움', cls: 'diff-easy'   },
+    { key: 'normal', label: '보통', cls: 'diff-normal' },
+    { key: 'hard',   label: '도전', cls: 'diff-hard'   },
+  ];
+  const EMOJIS = ['😊','😄','🥰','💪','😌','🤔','😢','😤','🥺','😮'];
 
-    const STORAGE_KEY = 'quote_done';
-    const LAST_KEY   = 'quote_last';
-
-    function today() {
-      return new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\. ?/g, '-').replace(/-$/, '');
-    }
-
-    // doneMap: { [index]: "YYYY-MM-DD" | false }
-    function loadDone() {
-      try {
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-        // 이전 버전 boolean true 값 마이그레이션
-        Object.keys(data).forEach(k => { if (data[k] === true) data[k] = today(); });
-        return data;
-      } catch { return {}; }
-    }
-    function saveDone(obj) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
-    }
-    let doneMap = loadDone();
-
-    // 랜덤 시작 — 직전에 봤던 것 제외
-    function pickRandom() {
-      const last = parseInt(localStorage.getItem(LAST_KEY) ?? '-1');
-      let next;
-      do { next = Math.floor(Math.random() * quotes.length); } while (next === last && quotes.length > 1);
-      localStorage.setItem(LAST_KEY, next);
-      return next;
-    }
-    let current = pickRandom();
-
-    // 타이틀에 현재 월 표시
-    const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-    document.getElementById('page-title').textContent = monthNames[new Date().getMonth()] + '의 명언';
-
-    const card = document.getElementById('card');
-    const textEl = document.getElementById('quote-text');
-    const authorEl = document.getElementById('quote-author');
-    const infoEl = document.getElementById('quote-info');
-    const progressFill = document.getElementById('progress-fill');
-    const progressLabel = document.getElementById('progress-label');
-    const missionCard = document.getElementById('mission-card');
-    const missionTextEl = document.getElementById('mission-text');
-    const btnDone = document.getElementById('btn-done');
-
-    btnDone.addEventListener('click', () => {
-      const wasDone = !!doneMap[current];
-      doneMap[current] = wasDone ? false : today();
-      saveDone(doneMap);
-      applyDoneState(!wasDone);
-      updateBadge();
-    });
-
-    function applyDoneState(isDone) {
-      btnDone.classList.toggle('done', isDone);
-      btnDone.textContent = isDone ? '완료 ✓' : '완료';
-    }
-
-    function updateBadge() {
-      const count = Object.values(doneMap).filter(Boolean).length;
-      document.getElementById('done-badge').textContent = count;
-      updateProgress();
-    }
-
-    // 완료 패널
-    const overlay = document.getElementById('panel-overlay');
-    const panel   = document.getElementById('history-panel');
-    const panelBody = document.getElementById('panel-body');
-
-    function openPanel() {
-      renderPanel();
-      overlay.classList.add('open');
-      panel.classList.add('open');
-    }
-    function closePanel() {
-      overlay.classList.remove('open');
-      panel.classList.remove('open');
-    }
-
-    function renderPanel() {
-      const entries = Object.entries(doneMap)
-        .filter(([, v]) => v)
-        .sort((a, b) => String(b[1]).localeCompare(String(a[1]))); // 날짜 내림차순
-
-      if (entries.length === 0) {
-        panelBody.innerHTML = '<p class="panel-empty">아직 완료한 미션이 없어요.<br>오늘의 미션을 실천해보세요!</p>';
-        return;
+  const quotes = [
+    {
+      text: "인생은 자전거를 타는 것과 같다. 균형을 잡으려면 계속 움직여야 한다.",
+      author: "알베르트 아인슈타인", info: "물리학자 (1879–1955)",
+      missions: {
+        easy:   "오늘 10분만 밖에 나가 걷거나 간단한 스트레칭을 해보세요.",
+        normal: "오늘 하루 동안 균형이 무너진다고 느낄 때마다 잠시 멈추고 숨을 고른 뒤 다시 시작해보세요. 몇 번이나 그랬는지 저녁에 기록해보세요.",
+        hard:   "이번 주 매일 30분씩 운동하는 계획표를 작성하고, 오늘 첫 번째 운동을 실제로 완료해보세요."
       }
+    },
+    {
+      text: "성공은 열정을 잃지 않고 실패에서 실패로 나아가는 것이다.",
+      author: "윈스턴 처칠", info: "영국 총리 (1874–1965)",
+      missions: {
+        easy:   "포기했던 일 하나를 떠올리고 '다시 해볼 수 있다'고 소리 내어 말해보세요.",
+        normal: "오늘 실패가 두려워 시작하지 못했던 일의 첫 단계를 딱 10분만 시도해보세요.",
+        hard:   "최근 포기한 일을 다시 시작하고, 이번엔 실패 일지를 만들어 매일 배운 점을 기록해보세요."
+      }
+    },
+    {
+      text: "당신이 할 수 있다고 생각하든, 할 수 없다고 생각하든, 당신이 옳다.",
+      author: "헨리 포드", info: "기업인 (1863–1947)",
+      missions: {
+        easy:   "오늘 하루 '못 할 것 같다'는 말 대신 '한번 해보자'로 바꿔 말해보세요.",
+        normal: "자신을 가장 제한하는 부정적 생각 하나를 찾아 적고, 반박 근거 세 가지를 써보세요.",
+        hard:   "오랫동안 '나는 못 해'라고 생각해온 일에 도전하는 계획을 세우고 오늘 첫 행동을 취해보세요."
+      }
+    },
+    {
+      text: "천 리 길도 한 걸음부터 시작된다.",
+      author: "노자", info: "철학자 (기원전 6세기)",
+      missions: {
+        easy:   "오늘 가장 작은 할 일 하나를 골라 바로 실행해보세요. 5분이면 충분합니다.",
+        normal: "오래 미뤄온 큰 목표를 떠올리고, 오늘 할 수 있는 첫 번째 작은 행동을 실천해보세요.",
+        hard:   "인생의 큰 목표를 정하고, 그것을 위한 30일 로드맵을 작성한 뒤 오늘 1일차를 시작해보세요."
+      }
+    },
+    {
+      text: "나는 내일 죽을 것처럼 살고, 영원히 살 것처럼 배운다.",
+      author: "마하트마 간디", info: "인도 독립운동 지도자 (1869–1948)",
+      missions: {
+        easy:   "오늘 평소 관심 있었지만 미뤘던 주제의 영상이나 글을 15분이라도 찾아보세요.",
+        normal: "오늘 하루를 '마지막 날'처럼 살아보세요. 미뤘던 연락, 감사 인사, 새로운 시도 중 하나를 해보세요.",
+        hard:   "배우고 싶었던 새로운 기술이나 언어를 정하고, 오늘부터 매일 30분씩 공부하는 루틴을 시작하세요."
+      }
+    },
+    {
+      text: "두려움은 앞으로 나아가지 않는 것에서 온다. 앞으로 나아가면 두려움은 사라진다.",
+      author: "베네딕트 쿠퍼버그", info: "작가",
+      missions: {
+        easy:   "오늘 두렵거나 불편한 상황을 한 가지 떠올리고, 그것에 대해 일기에 솔직하게 써보세요.",
+        normal: "두렵거나 불편해서 피해왔던 연락이나 대화를 오늘 한 번 용기 내어 시작해보세요.",
+        hard:   "가장 크게 두려워하는 일을 오늘 직접 실행해보세요. 준비보다 실행이 먼저입니다."
+      }
+    },
+    {
+      text: "어제는 역사이고, 내일은 미스터리이며, 오늘은 선물이다.",
+      author: "빌 킨", info: "만화가",
+      missions: {
+        easy:   "오늘 5분 동안 스마트폰 없이 주변의 소리, 빛, 공기를 느끼며 앉아있어보세요.",
+        normal: "오늘 하루 동안 스마트폰 화면을 보는 시간을 평소보다 1시간 줄이고, 그 시간에 현재에 집중해보세요.",
+        hard:   "하루 동안 SNS와 뉴스를 완전히 끊고, 눈앞에 있는 사람과 순간에만 집중해보세요."
+      }
+    },
+    {
+      text: "우리가 알고 있는 것은 한 방울의 물이요, 모르는 것은 바다다.",
+      author: "아이작 뉴턴", info: "물리학자 (1643–1727)",
+      missions: {
+        easy:   "오늘 '나는 이미 안다'고 생각했던 주제를 하나 정해 10분만 다시 찾아보세요.",
+        normal: "평소 궁금했지만 미뤘던 질문 하나를 오늘 깊이 파고들어 새로운 것 세 가지를 배워보세요.",
+        hard:   "자신이 전혀 모르는 분야의 책이나 강의를 오늘부터 시작하고, 배운 점을 매일 기록해보세요."
+      }
+    },
+    {
+      text: "자신을 사랑하는 것이 평생에 걸친 로맨스의 시작이다.",
+      author: "오스카 와일드", info: "작가 (1854–1900)",
+      missions: {
+        easy:   "거울을 보며 자신에게 칭찬 한 마디를 소리 내어 말해보세요.",
+        normal: "오늘 자신에게 시간과 돈을 투자하는 행동을 한 가지 해보세요. 좋아하는 카페, 산책, 독서 등.",
+        hard:   "자신을 괴롭혀온 부정적 자아상을 적고, 그것을 긍정적으로 바꾸는 선언문을 작성해 매일 읽어보세요."
+      }
+    },
+    {
+      text: "지금 하지 않으면 언제 할 것인가?",
+      author: "힐렐", info: "유대 현인 (기원전 110–기원전 10)",
+      missions: {
+        easy:   "'언젠가 해야지'라고 생각해온 일 목록을 적어보세요.",
+        normal: "목록 중 하나를 골라 오늘 당장 시작해보세요. 완성이 아니라 시작이 목표입니다.",
+        hard:   "가장 오래 미뤄온 일을 오늘 완전히 끝내보세요. 타이머를 켜고 집중해보세요."
+      }
+    },
+    {
+      text: "상상력은 지식보다 중요하다.",
+      author: "알베르트 아인슈타인", info: "물리학자 (1879–1955)",
+      missions: {
+        easy:   "오늘 5분 동안 아무 제약 없이 자유롭게 낙서하거나 생각나는 것을 종이에 써보세요.",
+        normal: "현재 직면한 문제나 목표를 가장 창의적인 방식으로 해결하는 방법 5가지를 브레인스토밍해보세요.",
+        hard:   "평소와 완전히 다른 방식으로 하루를 보내보세요. 다른 길, 다른 루틴, 새로운 관점을 의도적으로 찾아보세요."
+      }
+    },
+    {
+      text: "행복은 목적지가 아니라 여정이다.",
+      author: "랄프 왈도 에머슨", info: "철학자·시인 (1803–1882)",
+      missions: {
+        easy:   "오늘 하루 중 작은 즐거움이나 아름다움을 발견하면 사진이나 메모로 남겨보세요.",
+        normal: "결과에 집착하지 않고 과정 자체를 즐길 수 있는 일을 하나 골라 오늘 여유롭게 해보세요.",
+        hard:   "매일 '오늘의 여정에서 행복했던 순간'을 기록하는 행복 일기를 오늘부터 시작해보세요."
+      }
+    },
+    {
+      text: "가장 어두운 밤도 끝나고, 태양은 다시 떠오른다.",
+      author: "빅토르 위고", info: "작가 (1802–1885)",
+      missions: {
+        easy:   "힘든 시간을 지나고 있는 주변 사람에게 짧은 응원 메시지를 보내보세요.",
+        normal: "현재 가장 힘든 상황을 적고, 그 상황이 끝났을 때 어떤 모습일지 구체적으로 그려보세요.",
+        hard:   "오랫동안 힘들었던 사람을 직접 만나거나 전화해서 진심 어린 대화를 나눠보세요."
+      }
+    },
+    {
+      text: "꿈을 꿀 수 있다면, 이룰 수도 있다.",
+      author: "월트 디즈니", info: "기업인 (1901–1966)",
+      missions: {
+        easy:   "이루고 싶은 꿈을 종이에 적고, 잘 보이는 곳에 붙여두세요.",
+        normal: "꿈을 이루기 위한 구체적인 계획 3단계를 오늘 작성하고, 1단계를 바로 시작해보세요.",
+        hard:   "꿈에 다가가기 위해 '오늘부터 매일 하겠다'는 약속을 정하고, 주변 사람에게 선언해보세요."
+      }
+    },
+    {
+      text: "나 자신을 아는 것이 모든 지혜의 시작이다.",
+      author: "아리스토텔레스", info: "철학자 (기원전 384–322)",
+      missions: {
+        easy:   "오늘 하루를 마치며 '오늘 내가 느낀 감정'을 세 가지 적어보세요.",
+        normal: "나의 강점 5가지와 약점 3가지를 솔직하게 적어보세요. 강점은 어떻게 활용할지도 써보세요.",
+        hard:   "나의 가치관, 두려움, 원하는 것을 깊이 탐색하는 자기 분석 에세이를 한 페이지 작성해보세요."
+      }
+    },
+    {
+      text: "인생에서 가장 큰 영광은 넘어지지 않는 것이 아니라, 넘어질 때마다 일어서는 것이다.",
+      author: "넬슨 만델라", info: "남아프리카 대통령 (1918–2013)",
+      missions: {
+        easy:   "최근 실패했던 일을 떠올리고, 그 경험에서 배운 점 하나를 메모해보세요.",
+        normal: "최근 포기했던 일을 다시 시작하기 위한 첫 단계를 오늘 밟아보세요.",
+        hard:   "가장 크게 실패했던 경험을 돌아보며, 그것이 지금의 나에게 어떤 의미인지 에세이로 써보세요."
+      }
+    },
+    {
+      text: "변화를 두려워하지 마라. 변화야말로 인생 최고의 선물이다.",
+      author: "스펜서 존슨", info: "작가 (1938–2017)",
+      missions: {
+        easy:   "오늘 평소와 다른 음식을 먹거나, 다른 길로 이동해보세요.",
+        normal: "오늘 평소와 완전히 다른 루틴을 하나 시도해보고, 어떤 느낌이었는지 기록해보세요.",
+        hard:   "오랫동안 바꾸고 싶었던 습관을 오늘부터 변경하고, 30일 추적표를 만들어보세요."
+      }
+    },
+    {
+      text: "남들이 당신을 어떻게 생각하는지는 당신의 일이 아니다.",
+      author: "레지나 브렛", info: "작가·칼럼니스트",
+      missions: {
+        easy:   "오늘 남의 시선이 신경 쓰여 못 했던 것을 딱 하나 해보세요.",
+        normal: "타인의 시선 때문에 포기했던 꿈이나 취미를 적어보고, 그 중 하나를 오늘 다시 시작해보세요.",
+        hard:   "가장 두려운 '남들의 시선'이 필요한 일을 오늘 공개적으로 해보세요. SNS 게시물, 발표, 도전 선언 등."
+      }
+    },
+    {
+      text: "잘 웃는 사람이 잘 살 수 있다.",
+      author: "버트런드 러셀", info: "철학자 (1872–1970)",
+      missions: {
+        easy:   "오늘 웃을 수 있는 영상이나 책을 10분이라도 찾아보세요.",
+        normal: "오늘 주변 사람들에게 먼저 웃으며 인사하고, 그 반응과 내 기분을 기록해보세요.",
+        hard:   "오늘 하루 동안 만나는 모든 사람에게 진심 어린 웃음과 따뜻한 말 한마디씩을 건네보세요."
+      }
+    },
+    {
+      text: "오늘 할 수 있는 일을 내일로 미루지 마라.",
+      author: "벤저민 프랭클린", info: "정치가·발명가 (1706–1790)",
+      missions: {
+        easy:   "오늘 반드시 할 일 세 가지를 지금 적어보세요.",
+        normal: "적은 세 가지를 퇴근 전까지 모두 완료해보세요. 완료하면 체크 표시를 하세요.",
+        hard:   "오늘 밀린 일을 모두 정리하고, 내일의 할 일 목록도 미리 작성해보세요."
+      }
+    },
+    {
+      text: "당신이 가진 것에 감사하라. 그러면 더 많은 것을 갖게 된다.",
+      author: "오프라 윈프리", info: "방송인 (1954–)",
+      missions: {
+        easy:   "오늘 감사한 것 세 가지를 아주 작은 것이라도 떠올려 적어보세요.",
+        normal: "오늘 감사하지 못했던 사람에게 직접 감사 메시지를 보내보세요.",
+        hard:   "매일 감사 일기를 쓰기로 결심하고, 오늘부터 30일 동안 하루 5가지씩 기록해보세요."
+      }
+    },
+    {
+      text: "책 읽는 사람은 책 읽지 않는 사람보다 더 오래 산다.",
+      author: "조지 마틴", info: "작가 (1948–)",
+      missions: {
+        easy:   "오늘 10페이지라도 책을 읽어보세요. 장르는 상관없습니다.",
+        normal: "오늘 읽은 내용 중 인상 깊은 문장을 한 가지 골라 왜 좋은지 이유를 적어보세요.",
+        hard:   "한 달 안에 읽을 책 3권을 선정하고, 오늘 첫 번째 책의 1장을 완독해보세요."
+      }
+    },
+    {
+      text: "실패는 성공의 어머니다.",
+      author: "마오쩌둥", info: "정치가 (1893–1976)",
+      missions: {
+        easy:   "최근 실패 경험에서 배운 점 하나를 메모해보세요.",
+        normal: "지금까지 경험한 실패 중 가장 큰 교훈을 준 세 가지를 정리해 적어보세요.",
+        hard:   "의도적으로 '실패할 수 있는' 새로운 도전을 오늘 시작하고, 그 과정을 기록해보세요."
+      }
+    },
+    {
+      text: "당신이 멈추지 않는 한 얼마나 천천히 가도 상관없다.",
+      author: "공자", info: "철학자 (기원전 551–479)",
+      missions: {
+        easy:   "오늘 완벽하지 않아도 괜찮다고 스스로에게 말하며, 하던 일을 조금이라도 이어가보세요.",
+        normal: "속도에 집착하지 않고 꾸준히 해온 일을 되돌아보고, 지금까지의 진전을 인정해보세요.",
+        hard:   "느리지만 꾸준히 하고 싶은 장기 목표를 정하고, 매일 조금씩 실천하는 100일 계획을 세워보세요."
+      }
+    },
+    {
+      text: "시작이 반이다.",
+      author: "아리스토텔레스", info: "철학자 (기원전 384–322)",
+      missions: {
+        easy:   "계속 미뤄온 일을 딱 5분만 시작해보세요. 시작하면 계속하게 됩니다.",
+        normal: "오늘 완전히 새로운 일을 시작해보세요. 작은 취미, 새 프로젝트, 새 습관 무엇이든 괜찮습니다.",
+        hard:   "꼭 하고 싶었지만 시작조차 못 했던 프로젝트나 꿈에 오늘 첫 번째 공식 행동을 취해보세요."
+      }
+    },
+    {
+      text: "진정한 발견의 여행은 새로운 풍경을 찾는 것이 아니라, 새로운 눈을 갖는 것이다.",
+      author: "마르셀 프루스트", info: "작가 (1871–1922)",
+      missions: {
+        easy:   "오늘 매일 지나치던 풍경이나 사물을 처음 보는 것처럼 관찰해보세요.",
+        normal: "익숙한 일상에서 완전히 새로운 시각으로 바라볼 수 있는 것 세 가지를 찾아 기록해보세요.",
+        hard:   "평소에 전혀 가지 않는 장소나 접하지 않던 사람들의 세계를 직접 경험해보세요."
+      }
+    },
+    {
+      text: "우리는 우리가 반복하는 것의 결과다. 탁월함은 행동이 아니라 습관이다.",
+      author: "아리스토텔레스", info: "철학자 (기원전 384–322)",
+      missions: {
+        easy:   "오늘부터 시작하고 싶은 습관 하나를 정하고 오늘 실천해보세요.",
+        normal: "현재 자신의 가장 나쁜 습관 하나를 파악하고, 대체 행동을 정해 오늘부터 시작해보세요.",
+        hard:   "21일 습관 형성 계획을 작성하고, 매일 체크하는 트래커를 만들어 오늘부터 시작해보세요."
+      }
+    },
+    {
+      text: "남과 비교하지 마라. 당신은 어제의 당신과 비교하면 된다.",
+      author: "조던 피터슨", info: "심리학자·작가 (1962–)",
+      missions: {
+        easy:   "어제보다 조금이라도 나아진 점 하나를 오늘 스스로 찾아보세요.",
+        normal: "1년 전의 나와 지금의 나를 비교해보세요. 성장한 점 다섯 가지를 적어보세요.",
+        hard:   "앞으로 1년 후의 나에게 편지를 쓰고, 그 사람이 되기 위한 월별 계획을 세워보세요."
+      }
+    },
+    {
+      text: "삶이 있는 곳에 희망이 있다.",
+      author: "마르쿠스 툴리우스 키케로", info: "철학자·정치가 (기원전 106–43)",
+      missions: {
+        easy:   "오늘 힘들더라도 내일을 기대할 수 있는 작은 계획 하나를 세워보세요.",
+        normal: "현재 가장 힘든 상황에서도 희망의 씨앗을 찾아보세요. 작은 것이라도 세 가지를 적어보세요.",
+        hard:   "힘든 상황에 있는 주변 사람을 찾아 직접 만나거나 진심으로 도움을 제안해보세요."
+      }
+    },
+    {
+      text: "친절은 세상에서 가장 위대한 지혜다.",
+      author: "랄프 왈도 에머슨", info: "철학자·시인 (1803–1882)",
+      missions: {
+        easy:   "오늘 주변 사람에게 기대 없이 먼저 작은 친절을 베풀어보세요.",
+        normal: "오늘 낯선 사람을 포함해 세 명에게 진심 어린 친절을 베풀고, 그 경험을 기록해보세요.",
+        hard:   "지역 사회나 주변을 위해 자원봉사나 도움 활동을 오늘 계획하고 첫 단계를 실행해보세요."
+      }
+    },
+    {
+      text: "당신이 심는 것을 거두리라. 오늘 뿌린 씨앗이 내일의 열매가 된다.",
+      author: "성경 갈라디아서", info: "6장 7절",
+      missions: {
+        easy:   "오늘 미래의 나를 위해 작은 씨앗을 하나 심어보세요. 책 한 페이지, 물 한 잔, 감사 메모 하나.",
+        normal: "한 달 후 수확하고 싶은 것을 정하고, 오늘 그것을 위한 구체적인 행동을 실천해보세요.",
+        hard:   "1년 뒤 나의 모습을 구체적으로 그리고, 오늘부터 매일 그 방향으로 한 가지씩 실천하는 계획을 세워보세요."
+      }
+    },
+  ];
 
-      // 날짜별 그룹
-      const groups = {};
-      entries.forEach(([idx, date]) => {
-        const key = typeof date === 'string' ? date : today();
-        if (!groups[key]) groups[key] = [];
-        groups[key].push({ idx: parseInt(idx), date: key });
+  const STORAGE_KEY = 'quote_done_v3';
+  const LAST_KEY    = 'quote_last';
+
+  // 이번 달 일수만큼만 사용
+  const now = new Date();
+  const daysThisMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  const activeQuotes  = quotes.slice(0, daysThisMonth);
+  const TOTAL         = activeQuotes.length; // 완료 가능한 최대 수 (명언당 1개)
+
+  function today() {
+    return new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit',day:'2-digit'})
+      .replace(/\. ?/g, '-').replace(/-$/, '');
+  }
+
+  // doneMap: { [idx]: { easy: {date,note}|false, normal: ..., hard: ... } }
+  function loadDone() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      // 이전 포맷 무시하고 새 구조만 사용
+      const valid = {};
+      Object.entries(raw).forEach(([k, v]) => {
+        if (v && typeof v === 'object' && ('easy' in v || 'normal' in v || 'hard' in v)) {
+          valid[k] = v;
+        }
+      });
+      return valid;
+    } catch { return {}; }
+  }
+  function saveDone(obj) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  }
+  let doneMap = loadDone();
+
+  const SELECTED_KEY = 'quote_selected_v1';
+  function loadSelected() {
+    try { return JSON.parse(localStorage.getItem(SELECTED_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveSelected(obj) { localStorage.setItem(SELECTED_KEY, JSON.stringify(obj)); }
+  let selectedMap = loadSelected();
+
+  const MONTHLY_FAV_KEY  = 'quote_monthly_fav_v1';
+  const FAV_PROMPTED_KEY = 'quote_fav_prompted_v1';
+  function loadMonthlyFav() {
+    try { return JSON.parse(localStorage.getItem(MONTHLY_FAV_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveMonthlyFav(obj) { localStorage.setItem(MONTHLY_FAV_KEY, JSON.stringify(obj)); }
+  let monthlyFav = loadMonthlyFav();
+
+  function getFavPrompted() {
+    try { return JSON.parse(localStorage.getItem(FAV_PROMPTED_KEY)) || []; }
+    catch { return []; }
+  }
+  function addFavPrompted(ym) {
+    const arr = getFavPrompted();
+    if (!arr.includes(ym)) { arr.push(ym); localStorage.setItem(FAV_PROMPTED_KEY, JSON.stringify(arr)); }
+  }
+
+  function getYM(date) {
+    const d = date || new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  }
+
+  function getCompletedForMonth(ym) {
+    const prefix = ym + '-';
+    const idxSet = new Set();
+    Object.entries(doneMap).forEach(([idx, v]) => {
+      if (!v) return;
+      DIFFS.forEach(d => {
+        const entry = v[d.key];
+        if (entry && entry.date && entry.date.startsWith(prefix)) idxSet.add(parseInt(idx));
+      });
+    });
+    return [...idxSet];
+  }
+
+  function getDiffEntry(idx, diffKey) {
+    return doneMap[idx]?.[diffKey] || false;
+  }
+  function setDiffEntry(idx, diffKey, value) {
+    if (!doneMap[idx]) doneMap[idx] = {};
+    doneMap[idx][diffKey] = value;
+    saveDone(doneMap);
+  }
+  function countDone() {
+    // 명언당 하나의 난이도만 선택 → 완료된 명언 수 반환
+    let n = 0;
+    for (let i = 0; i < activeQuotes.length; i++) {
+      const v = doneMap[i];
+      if (v && DIFFS.some(d => v[d.key])) n++;
+    }
+    return n;
+  }
+
+  // ── 랜덤 시작 ──
+  function pickRandom() {
+    const last = parseInt(localStorage.getItem(LAST_KEY) ?? '-1');
+    let next;
+    do { next = Math.floor(Math.random() * activeQuotes.length); }
+    while (next === last && activeQuotes.length > 1);
+    localStorage.setItem(LAST_KEY, next);
+    return next;
+  }
+  let current = pickRandom();
+
+  // ── 타이틀 ──
+  const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const _nt = new Date();
+  document.getElementById('page-title').textContent =
+    _nt.getFullYear() + '년 ' + monthNames[_nt.getMonth()] + ' ' + _nt.getDate() + '일의 명언';
+
+  // ── DOM refs ──
+  const card      = document.getElementById('card');
+  const textEl    = document.getElementById('quote-text');
+  const authorEl  = document.getElementById('quote-author');
+  const infoEl    = document.getElementById('quote-info');
+  const missionContainer = document.getElementById('mission-container');
+  const progressFill  = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+
+  // ── 프로그레스 ──
+  function updateProgress() {
+    const done = countDone();
+    progressFill.style.width = Math.round(done / TOTAL * 100) + '%';
+    progressLabel.textContent = done + '일 / ' + TOTAL + '일 완료';
+    document.getElementById('done-badge').textContent = done;
+  }
+
+  // ── 미션 3개 렌더링 ──
+  function renderMissions(idx) {
+    const q = activeQuotes[idx];
+
+    // 완료된 난이도 찾기 (최대 1개)
+    const doneDiff = DIFFS.find(d => !!getDiffEntry(idx, d.key));
+    // 선택됐지만 아직 완료 전인 난이도 찾기
+    const selKey   = !doneDiff ? (selectedMap[idx] || null) : null;
+    const activeDiff = doneDiff || (selKey ? DIFFS.find(d => d.key === selKey) : null);
+
+    if (activeDiff) {
+      // 선택된 미션 하나만 표시
+      const d     = activeDiff;
+      const entry = getDiffEntry(idx, d.key);
+      const isDone = !!entry;
+      const note   = (entry && entry.note)  ? entry.note  : '';
+      const emoji  = (entry && entry.emoji) ? entry.emoji : '';
+      const noteDisplay = emoji ? emoji + ' ' + note : note;
+      missionContainer.innerHTML = `
+        <div class="mission-row" id="row-${d.key}">
+          <div class="mission-row-body">
+            <div class="mission-icon">🎯</div>
+            <div class="mission-info">
+              <div class="mission-label-row">
+                <span class="mission-label">오늘의 미션</span>
+                <span class="difficulty-badge ${d.cls}">${d.label}</span>
+              </div>
+              <div class="mission-text">${q.missions[d.key]}</div>
+              <div class="note-display" id="note-display-${d.key}" style="${(emoji || note) ? '' : 'display:none'}">${noteDisplay}</div>
+            </div>
+            <div class="btn-group-col">
+              <button class="btn-done ${isDone ? 'done' : ''}" id="btn-done-${d.key}" data-diff="${d.key}">${isDone ? '완료 ✓' : '완료'}</button>
+              <button class="btn-cancel" id="btn-cancel-select" data-diff="${d.key}">취소</button>
+            </div>
+          </div>
+          <div class="note-area" id="note-area-${d.key}">
+            <div class="note-input-wrap">
+              <div class="note-input-header">오늘의 느낀 점</div>
+              <div class="emoji-picker" id="emoji-picker-${d.key}">
+                ${EMOJIS.map(em => `<button class="emoji-btn${emoji === em ? ' selected' : ''}" data-emoji="${em}">${em}</button>`).join('')}
+              </div>
+              <textarea class="note-textarea" id="note-input-${d.key}" placeholder="미션을 실천하면서 느낀 점을 자유롭게 기록해보세요 (최대 100자)" maxlength="100" rows="2"></textarea>
+              <div class="note-input-actions">
+                <button class="btn-note-save" id="btn-save-${d.key}" data-diff="${d.key}">저장</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+      document.getElementById('btn-done-' + d.key).addEventListener('click', () => {
+        const wasDone = !!getDiffEntry(idx, d.key);
+        if (wasDone) {
+          setDiffEntry(idx, d.key, false);
+        } else {
+          setDiffEntry(idx, d.key, { date: today(), note: '' });
+        }
+        updateProgress();
+        renderMissions(idx);
+        if (!wasDone) {
+          openNoteArea(d.key);
+          const streak = getCurrentStreak();
+          if (streak >= 3) showStreakCelebration(streak);
+          setTimeout(checkLastDayFavorite, 1500);
+        }
       });
 
-      panelBody.innerHTML = Object.entries(groups).map(([date, items]) => `
-        <div class="history-date-group">
-          <div class="history-date-label">${date}</div>
-          ${items.map(({ idx }) => `
-            <div class="history-item" data-idx="${idx}">
+      document.getElementById('btn-cancel-select').addEventListener('click', () => {
+        if (isDone) setDiffEntry(idx, d.key, false);
+        delete selectedMap[idx];
+        saveSelected(selectedMap);
+        renderMissions(idx);
+        updateProgress();
+      });
+
+      document.querySelectorAll('#emoji-picker-' + d.key + ' .emoji-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const already = btn.classList.contains('selected');
+          document.querySelectorAll('#emoji-picker-' + d.key + ' .emoji-btn').forEach(b => b.classList.remove('selected'));
+          if (!already) btn.classList.add('selected');
+        });
+      });
+      document.getElementById('btn-save-' + d.key).addEventListener('click', () => saveNote(idx, d.key));
+      document.getElementById('note-input-' + d.key).addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); saveNote(idx, d.key); }
+      });
+
+    } else {
+      // 3개 미션 모두 표시 — 각각 선택 버튼
+      missionContainer.innerHTML = DIFFS.map(d => `
+        <div class="mission-row" id="row-${d.key}">
+          <div class="mission-row-body">
+            <div class="mission-icon">🎯</div>
+            <div class="mission-info">
+              <div class="mission-label-row">
+                <span class="mission-label">오늘의 미션</span>
+                <span class="difficulty-badge ${d.cls}">${d.label}</span>
+              </div>
+              <div class="mission-text">${q.missions[d.key]}</div>
+            </div>
+            <button class="btn-select" id="btn-select-${d.key}" data-diff="${d.key}">선택</button>
+          </div>
+        </div>`).join('');
+
+      DIFFS.forEach(d => {
+        document.getElementById('btn-select-' + d.key).addEventListener('click', () => {
+          selectedMap[idx] = d.key;
+          saveSelected(selectedMap);
+          renderMissions(idx);
+        });
+      });
+    }
+  }
+
+  function openNoteArea(diffKey) {
+    const area  = document.getElementById('note-area-' + diffKey);
+    const input = document.getElementById('note-input-' + diffKey);
+    const entry = getDiffEntry(current, diffKey);
+    input.value = (entry && entry.note) ? entry.note : '';
+    area.classList.add('open');
+    input.focus();
+  }
+  function closeNoteArea(diffKey) {
+    document.getElementById('note-area-' + diffKey)?.classList.remove('open');
+  }
+  function saveNote(idx, diffKey) {
+    const note  = document.getElementById('note-input-' + diffKey).value.trim();
+    const entry = getDiffEntry(idx, diffKey);
+    if (entry) {
+      entry.note = note;
+      setDiffEntry(idx, diffKey, entry);
+    }
+    closeNoteArea(diffKey);
+    const display = document.getElementById('note-display-' + diffKey);
+    if (note) { display.textContent = note; display.style.display = 'block'; }
+    else       { display.style.display = 'none'; }
+  }
+
+  // ── show ──
+  function show(index, animate = true) {
+    const q = activeQuotes[index];
+    if (animate) {
+      card.classList.add('fade');
+      missionContainer.classList.add('fade');
+      setTimeout(() => {
+        textEl.textContent = q.text;
+        authorEl.textContent = '— ' + q.author;
+        infoEl.textContent = q.info;
+        renderMissions(index);
+        updateProgress();
+        card.classList.remove('fade');
+        missionContainer.classList.remove('fade');
+      }, 400);
+    } else {
+      textEl.textContent = q.text;
+      authorEl.textContent = '— ' + q.author;
+      infoEl.textContent = q.info;
+      renderMissions(index);
+      updateProgress();
+    }
+  }
+
+  function goTo(index) {
+    current = (index + quotes.length) % quotes.length;
+    show(current);
+  }
+
+  document.getElementById('btn-random').addEventListener('click', () => {
+    let next;
+    do { next = Math.floor(Math.random() * quotes.length); } while (next === current);
+    localStorage.setItem(LAST_KEY, next);
+    goTo(next);
+  });
+
+  // 스와이프
+  let touchStartX = 0;
+  card.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  card.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+
+  // 마우스 드래그
+  let dragStartX = 0, dragging = false;
+  card.addEventListener('mousedown', e => { dragStartX = e.clientX; dragging = true; });
+  card.addEventListener('mouseup', e => {
+    if (!dragging) return; dragging = false;
+    const diff = dragStartX - e.clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  });
+  card.addEventListener('mouseleave', () => { dragging = false; });
+
+  // ── 패널 ──
+  const overlay  = document.getElementById('panel-overlay');
+  const panel    = document.getElementById('history-panel');
+  const tabList  = document.getElementById('tab-list');
+  const tabCal   = document.getElementById('tab-calendar');
+  let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
+
+  function openPanel() { renderList(); renderCalendar(); overlay.classList.add('open'); panel.classList.add('open'); }
+  function closePanel() { overlay.classList.remove('open'); panel.classList.remove('open'); }
+
+  document.querySelectorAll('.panel-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('btn-history').addEventListener('click', openPanel);
+  document.getElementById('btn-close-panel').addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+
+  // ── 목록 탭 ──
+  function diffLabel(key) { return DIFFS.find(d => d.key === key)?.label || key; }
+  function diffCls(key)   { return DIFFS.find(d => d.key === key)?.cls || ''; }
+
+  function renderList() {
+    // 날짜 기준으로 모든 완료 항목 수집
+    const entries = [];
+    Object.entries(doneMap).forEach(([idx, v]) => {
+      if (!v) return;
+      DIFFS.forEach(d => {
+        const entry = v[d.key];
+        if (entry && entry.date) {
+          entries.push({ date: entry.date, note: entry.note || '', emoji: entry.emoji || '', idx: parseInt(idx), diffKey: d.key });
+        }
+      });
+    });
+    entries.sort((a, b) => b.date.localeCompare(a.date));
+
+    if (!entries.length) {
+      tabList.innerHTML = '<p class="panel-empty">아직 완료한 미션이 없어요.<br>오늘의 미션을 실천해보세요!</p>';
+      return;
+    }
+
+    const groups = {};
+    entries.forEach(e => {
+      if (!groups[e.date]) groups[e.date] = [];
+      groups[e.date].push(e);
+    });
+
+    tabList.innerHTML = Object.entries(groups).map(([date, items]) => `
+      <div class="history-date-group">
+        <div class="history-date-label">${date}</div>
+        ${items.map(({ idx, diffKey, note, emoji }) => {
+          const noteDisplay = emoji ? emoji + ' ' + note : note;
+          return `
+          <div class="history-item" style="border-left-color:${diffKey==='easy'?'#8ab88a':diffKey==='normal'?'#c8a060':'#c08080'}">
+            <div class="history-item-header">
+              <div class="history-item-top">
+                <div class="history-item-quote">${quotes[idx].text}</div>
+                <div class="history-item-chevron">▼</div>
+              </div>
+              <div class="history-item-meta">
+                <div class="history-item-author">— ${quotes[idx].author}</div>
+                <div class="history-item-right">
+                  <span class="difficulty-badge ${diffCls(diffKey)}">${diffLabel(diffKey)}</span>
+                  <button class="btn-hist-edit" data-idx="${idx}" data-diff="${diffKey}">✎ 수정</button>
+                </div>
+              </div>
+              <div class="history-item-note" id="hist-note-display-${idx}-${diffKey}"${noteDisplay ? '' : ' style="display:none"'}>${noteDisplay}</div>
+            </div>
+            <div class="history-item-edit" id="hist-edit-${idx}-${diffKey}">
+              <div class="note-input-header">느낀 점 수정</div>
+              <div class="emoji-picker" id="hist-emoji-${idx}-${diffKey}">
+                ${EMOJIS.map(em => `<button class="emoji-btn${emoji === em ? ' selected' : ''}" data-emoji="${em}">${em}</button>`).join('')}
+              </div>
+              <textarea class="note-textarea" id="hist-input-${idx}-${diffKey}" maxlength="100" rows="2">${note}</textarea>
+              <div class="hist-edit-actions">
+                <button class="btn-hist-cancel-edit" data-idx="${idx}" data-diff="${diffKey}">취소</button>
+                <button class="btn-hist-save" data-idx="${idx}" data-diff="${diffKey}">저장</button>
+              </div>
+            </div>
+            <div class="history-item-mission">🎯 ${quotes[idx].missions[diffKey]}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    `).join('');
+
+    tabList.querySelectorAll('.history-item-header').forEach(h => {
+      h.addEventListener('click', () => h.closest('.history-item').classList.toggle('expanded'));
+    });
+
+    tabList.querySelectorAll('.btn-hist-edit').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const editArea = document.getElementById(`hist-edit-${btn.dataset.idx}-${btn.dataset.diff}`);
+        editArea.classList.toggle('open');
+      });
+    });
+
+    tabList.querySelectorAll('.history-item-edit').forEach(editArea => {
+      editArea.querySelectorAll('.emoji-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const already = btn.classList.contains('selected');
+          editArea.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+          if (!already) btn.classList.add('selected');
+        });
+      });
+    });
+
+    tabList.querySelectorAll('.btn-hist-save').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx  = parseInt(btn.dataset.idx);
+        const diff = btn.dataset.diff;
+        const note = document.getElementById(`hist-input-${idx}-${diff}`).value.trim();
+        const selEmoji = document.querySelector(`#hist-emoji-${idx}-${diff} .emoji-btn.selected`)?.dataset.emoji || '';
+        const entry = getDiffEntry(idx, diff);
+        if (entry) { entry.note = note; entry.emoji = selEmoji; setDiffEntry(idx, diff, entry); }
+        const display = document.getElementById(`hist-note-display-${idx}-${diff}`);
+        const displayText = selEmoji ? selEmoji + ' ' + note : note;
+        if (displayText) { display.textContent = displayText; display.style.display = ''; }
+        else { display.style.display = 'none'; }
+        document.getElementById(`hist-edit-${idx}-${diff}`).classList.remove('open');
+      });
+    });
+
+    tabList.querySelectorAll('.btn-hist-cancel-edit').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(`hist-edit-${btn.dataset.idx}-${btn.dataset.diff}`).classList.remove('open');
+      });
+    });
+  }
+
+  // ── 캘린더 탭 ──
+  function renderCalendar() {
+    const y = calYear, m = calMonth;
+    const mn = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    const pad = n => String(n).padStart(2, '0');
+    const prefix = `${y}-${pad(m+1)}-`;
+
+    // 날짜 → [{idx, diffKey, note}]
+    const monthDone = {};
+    Object.entries(doneMap).forEach(([idx, v]) => {
+      if (!v) return;
+      DIFFS.forEach(d => {
+        const entry = v[d.key];
+        if (entry && entry.date && entry.date.startsWith(prefix)) {
+          const dd = entry.date.slice(-2);
+          if (!monthDone[dd]) monthDone[dd] = [];
+          monthDone[dd].push({ idx: parseInt(idx), diffKey: d.key, note: entry.note || '' });
+        }
+      });
+    });
+
+    const doneCount = Object.values(monthDone).reduce((s, a) => s + a.length, 0);
+    const todayStr  = today();
+    const firstDay  = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+    const cells = Array(firstDay).fill('<div class="cal-cell empty"></div>');
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dd = pad(d);
+      const dateStr = `${y}-${pad(m+1)}-${dd}`;
+      const isToday = dateStr === todayStr;
+      const isSun   = new Date(y, m, d).getDay() === 0;
+      const has     = !!monthDone[dd];
+      let cls = 'cal-cell' + (has ? ' has-mission' : '') + (isToday ? ' today' : '') + (isSun && !has ? ' sun' : '');
+      cells.push(`<div class="${cls}"${has ? ` data-dd="${dd}"` : ''}>${d}</div>`);
+    }
+
+    const statsMsg = doneCount === 0
+      ? '이번 달 아직 완료한 미션이 없어요.'
+      : `이번 달 <span class="highlight">${doneCount}번</span>의 미션을 완료했어요!`;
+    const isAllDone = doneCount >= TOTAL;
+
+    const ym = `${y}-${pad(m+1)}`;
+    const favData = monthlyFav[ym];
+    const completedIdxsForCal = getCompletedForMonth(ym);
+    const favHtml = favData
+      ? `<div class="monthly-fav-card">
+          <div class="monthly-fav-label">⭐ 이달의 대표 명언</div>
+          <div class="monthly-fav-text">${quotes[favData.idx].text}</div>
+          <div class="monthly-fav-author">— ${quotes[favData.idx].author}</div>
+        </div>`
+      : completedIdxsForCal.length > 0
+        ? `<div class="monthly-fav-pick">
+            <button class="btn-pick-fav" id="btn-pick-fav">⭐ 이달의 대표 명언 선택하기</button>
+          </div>`
+        : '';
+
+    tabCal.innerHTML = `
+      <div class="cal-nav">
+        <button class="cal-nav-btn" id="cal-prev">‹</button>
+        <div class="cal-nav-title">${y}년 ${mn[m]}</div>
+        <button class="cal-nav-btn" id="cal-next">›</button>
+      </div>
+      <div class="cal-grid">
+        ${['일','월','화','수','목','금','토'].map(n => `<div class="cal-day-name">${n}</div>`).join('')}
+        ${cells.join('')}
+      </div>
+      <div class="cal-stats">${statsMsg}</div>
+      <div class="cal-congrats ${isAllDone ? 'show' : ''}">
+        🎉 이번 달 모든 미션을 완료했어요!<br>한 달 동안 정말 수고하셨습니다.
+      </div>
+      ${favHtml}
+      <div class="cal-detail" id="cal-detail"></div>`;
+
+    const pickFavBtn = document.getElementById('btn-pick-fav');
+    if (pickFavBtn) pickFavBtn.addEventListener('click', () => showFavoritePicker(ym, completedIdxsForCal));
+
+    tabCal.querySelectorAll('.cal-cell.has-mission').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const dd = cell.dataset.dd;
+        const dateStr = `${y}-${pad(m+1)}-${dd}`;
+        const items = monthDone[dd];
+        document.getElementById('cal-detail').innerHTML = `
+          <div class="cal-detail-date">${dateStr}</div>
+          ${items.map(({ idx, diffKey, note }) => `
+            <div class="history-item" style="border-left-color:${diffKey==='easy'?'#8ab88a':diffKey==='normal'?'#c8a060':'#c08080'}; margin-bottom:.5rem">
               <div class="history-item-header">
                 <div class="history-item-top">
                   <div class="history-item-quote">${quotes[idx].text}</div>
@@ -609,93 +1521,152 @@
                 </div>
                 <div class="history-item-meta">
                   <div class="history-item-author">— ${quotes[idx].author}</div>
-                  <div class="history-item-date">${date}</div>
+                  <span class="difficulty-badge ${diffCls(diffKey)}">${diffLabel(diffKey)}</span>
                 </div>
+                ${note ? `<div class="history-item-note">${note}</div>` : ''}
               </div>
-              <div class="history-item-mission">🎯 ${quotes[idx].mission}</div>
+              <div class="history-item-mission">🎯 ${quotes[idx].missions[diffKey]}</div>
             </div>
-          `).join('')}
-        </div>
-      `).join('');
-
-      // 아코디언 이벤트
-      panelBody.querySelectorAll('.history-item-header').forEach(header => {
-        header.addEventListener('click', () => {
-          header.closest('.history-item').classList.toggle('expanded');
+          `).join('')}`;
+        document.getElementById('cal-detail').querySelectorAll('.history-item-header').forEach(h => {
+          h.addEventListener('click', () => h.closest('.history-item').classList.toggle('expanded'));
         });
+        cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
-    }
-
-    document.getElementById('btn-history').addEventListener('click', openPanel);
-    document.getElementById('btn-close-panel').addEventListener('click', closePanel);
-    overlay.addEventListener('click', closePanel);
-
-    function updateProgress() {
-      const done = Object.values(doneMap).filter(Boolean).length;
-      const pct = Math.round((done / quotes.length) * 100);
-      progressFill.style.width = pct + '%';
-      progressLabel.textContent = `미션 ${done}/${quotes.length} 완료`;
-    }
-
-    function show(index, animate = true) {
-      const q = quotes[index];
-      if (animate) {
-        card.classList.add('fade');
-        missionCard.classList.add('fade');
-        setTimeout(() => {
-          textEl.textContent = q.text;
-          authorEl.textContent = '— ' + q.author;
-          infoEl.textContent = q.info;
-          missionTextEl.textContent = q.mission;
-          applyDoneState(!!doneMap[index]);
-          updateProgress();
-          card.classList.remove('fade');
-          missionCard.classList.remove('fade');
-        }, 400);
-      } else {
-        textEl.textContent = q.text;
-        authorEl.textContent = '— ' + q.author;
-        infoEl.textContent = q.info;
-        missionTextEl.textContent = q.mission;
-        applyDoneState(!!doneMap[index]);
-        updateProgress();
-      }
-    }
-
-    function goTo(index) {
-      current = (index + quotes.length) % quotes.length;
-      show(current);
-    }
-
-    document.getElementById('btn-random').addEventListener('click', () => {
-      let next;
-      do { next = Math.floor(Math.random() * quotes.length); } while (next === current);
-      localStorage.setItem(LAST_KEY, next);
-      goTo(next);
     });
 
-    // 스와이프
-    let touchStartX = 0;
-    card.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    card.addEventListener('touchend', e => {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-    }, { passive: true });
-
-    // 마우스 드래그
-    let dragStartX = 0;
-    let dragging = false;
-    card.addEventListener('mousedown', e => { dragStartX = e.clientX; dragging = true; });
-    card.addEventListener('mouseup', e => {
-      if (!dragging) return;
-      dragging = false;
-      const diff = dragStartX - e.clientX;
-      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    document.getElementById('cal-prev').addEventListener('click', () => {
+      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
     });
-    card.addEventListener('mouseleave', () => { dragging = false; });
+    document.getElementById('cal-next').addEventListener('click', () => {
+      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar();
+    });
+  }
 
-    updateBadge();
-    show(current, false);
+  // ── 연속 달성 streak ──
+  function getCurrentStreak() {
+    const dateSet = new Set();
+    Object.values(doneMap).forEach(v => {
+      if (!v) return;
+      DIFFS.forEach(d => { if (v[d.key] && v[d.key].date) dateSet.add(v[d.key].date); });
+    });
+    if (!dateSet.size) return 0;
+    function toKey(dt) {
+      return dt.getFullYear() + '-' +
+        String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+        String(dt.getDate()).padStart(2, '0');
+    }
+    let streak = 0;
+    const check = new Date();
+    while (dateSet.has(toKey(check))) { streak++; check.setDate(check.getDate() - 1); }
+    return streak;
+  }
+
+  function showStreakCelebration(streak) {
+    const colors = ['#9a8a6e','#c8b99a','#e8c46a','#8ab88a','#90b4e0','#e0a090','#c8a0d0'];
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      const size = 6 + Math.random() * 7;
+      p.style.cssText = `left:${Math.random()*100}vw;width:${size}px;height:${size}px;` +
+        `background:${colors[Math.floor(Math.random()*colors.length)]};` +
+        `animation-duration:${1.4 + Math.random()*1.6}s;animation-delay:${Math.random()*.7}s`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 3200);
+    }
+    const overlay = document.createElement('div');
+    overlay.className = 'streak-overlay';
+    const msgs = ['대단해요!','멋져요!','훌륭해요!'];
+    overlay.innerHTML = `<div class="streak-msg">
+      <span class="streak-emoji">🔥</span>
+      <div class="streak-title">${streak}일 연속 달성! ${msgs[Math.min(streak-3,2)]}</div>
+      <div class="streak-sub">꾸준함이 습관이 되고 있어요.<br>내일도 함께해요!</div>
+    </div>`;
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.remove(), 2700);
+  }
+
+  // ── 월 대표 명언 ──
+  function showFavoritePicker(ym, completedIdxs) {
+    addFavPrompted(ym);
+    const [year, month] = ym.split('-');
+    const mnNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    const mnLabel = year + '년 ' + mnNames[parseInt(month) - 1];
+    document.getElementById('fav-picker-modal')?.remove();
+    const modal = document.createElement('div');
+    modal.id = 'fav-picker-modal';
+    modal.innerHTML = `
+      <div class="fav-picker-overlay">
+        <div class="fav-picker-box">
+          <div class="fav-picker-header">
+            <div class="fav-picker-title">⭐ ${mnLabel} 대표 명언</div>
+            <div class="fav-picker-sub">${mnLabel}에 가장 마음에 든 명언을 골라 기록해보세요</div>
+          </div>
+          <div class="fav-picker-list">
+            ${completedIdxs.map(idx => `
+              <div class="fav-picker-item" data-idx="${idx}">
+                <div class="fav-picker-quote">${quotes[idx].text}</div>
+                <div class="fav-picker-author">— ${quotes[idx].author}</div>
+              </div>`).join('')}
+          </div>
+          <div class="fav-picker-actions">
+            <button class="fav-picker-skip" id="fav-skip">나중에 선택</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.querySelectorAll('.fav-picker-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = parseInt(item.dataset.idx);
+        monthlyFav[ym] = { idx };
+        saveMonthlyFav(monthlyFav);
+        modal.remove();
+        showFavToast(mnLabel);
+        if (document.getElementById('tab-calendar').classList.contains('active')) renderCalendar();
+      });
+    });
+    document.getElementById('fav-skip').addEventListener('click', () => modal.remove());
+  }
+
+  function showFavToast(mnLabel) {
+    const toast = document.createElement('div');
+    toast.className = 'fav-toast';
+    toast.textContent = `⭐ ${mnLabel} 대표 명언으로 저장되었어요`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2800);
+  }
+
+  function checkNewMonthFavorite() {
+    const currentYM = getYM();
+    const prompted  = getFavPrompted();
+    const pendingSet = new Set();
+    Object.values(doneMap).forEach(v => {
+      if (!v) return;
+      DIFFS.forEach(d => {
+        if (v[d.key] && v[d.key].date) {
+          const ym = v[d.key].date.slice(0, 7);
+          if (ym !== currentYM && !monthlyFav[ym] && !prompted.includes(ym)) pendingSet.add(ym);
+        }
+      });
+    });
+    if (!pendingSet.size) return;
+    const ym = [...pendingSet].sort().pop(); // 가장 최근 달
+    const completed = getCompletedForMonth(ym);
+    if (completed.length > 0) setTimeout(() => showFavoritePicker(ym, completed), 800);
+  }
+
+  function checkLastDayFavorite() {
+    const n = new Date();
+    if (n.getDate() !== new Date(n.getFullYear(), n.getMonth() + 1, 0).getDate()) return;
+    const ym = getYM();
+    if (monthlyFav[ym]) return;
+    const completed = getCompletedForMonth(ym);
+    if (completed.length > 0) showFavoritePicker(ym, completed);
+  }
+
+  // ── 초기 실행 ──
+  show(current, false);
+  checkNewMonthFavorite();
   </script>
 </body>
 </html>
