@@ -988,9 +988,10 @@
   function renderMissions(idx) {
     const q = quotes[idx];
 
-    // reshow 모드: reshowSet 등록 + 미완료 난이도 존재 + 오늘 전체 완료 아닌 경우
+    // reshow 모드: reshowSet 등록 + 미완료 난이도 존재 + 오늘 전체 완료 아님 + 오늘 이 명언 완료 안 함
     const uncompletedDiffs = DIFFS.filter(d => !getDiffEntry(idx, d.key));
-    const isReshow = reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday();
+    const isDoneToday = DIFFS.some(d => { const e = getDiffEntry(idx, d.key); return e && e.date === today(); });
+    const isReshow = reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday() && !isDoneToday;
 
     // 완료된 난이도 찾기 (reshow 모드면 무시)
     // 전체완료 탐색 시엔 오늘 완료한 diff를 우선 표시
@@ -1025,7 +1026,7 @@
             <div class="btn-group-col">
               <button class="btn-done ${isDone ? 'done locked' : ''}" id="btn-done-${d.key}" data-diff="${d.key}">${isDone ? '완료 ✓' : '완료'}</button>
               ${!isDone ? `<button class="btn-cancel" id="btn-cancel-select" data-diff="${d.key}">취소</button>` : ''}
-              ${isDone && !reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday() ? `<button class="btn-reshow-hint" id="btn-reshow-hint">💭 또 보기</button>` : ''}
+              ${isDone && !reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday() && isDoneToday ? `<button class="btn-reshow-hint" id="btn-reshow-hint">💭 또 보기</button>` : ''}
             </div>
           </div>
           <div class="note-area" id="note-area-${d.key}">
@@ -1574,6 +1575,8 @@
     document.getElementById('btn-reshow-yes').addEventListener('click', () => {
       addToReshow(idx);
       modal.remove();
+      renderMissions(idx);
+      updateNavState();
     });
     document.getElementById('btn-reshow-no').addEventListener('click', () => modal.remove());
     modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
