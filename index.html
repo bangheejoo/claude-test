@@ -250,6 +250,50 @@
       color: #fff; padding: .55rem 1.6rem;
     }
     #btn-random:hover { background: #5e5040; }
+    #btn-extra {
+      background: #7a6a55; border-color: #7a6a55;
+      color: #fff; padding: .55rem 1.6rem;
+    }
+    #btn-extra:hover { background: #5e5040; }
+
+    /* ── 오늘 미션 전체 완료 배너 ── */
+    .all-done-banner {
+      max-width: 720px; width: 100%;
+      margin-top: .8rem;
+      background: linear-gradient(135deg, #fdf9f4 0%, #fdf6e3 100%);
+      border: 1px solid #e8d8a0;
+      border-radius: 8px; padding: 1.4rem 1.8rem;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(200,176,100,.12);
+    }
+    .all-done-emoji { font-size: 2rem; display: block; margin-bottom: .5rem; }
+    .all-done-text {
+      font-size: .98rem; color: #7a6a55;
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 600; margin-bottom: .9rem;
+      letter-spacing: .02em; line-height: 1.6;
+    }
+    .all-done-nav {
+      display: flex; align-items: center;
+      justify-content: center; gap: 1rem;
+    }
+    .all-done-nav-label {
+      font-size: .82rem; color: #9a8a6e;
+      font-family: 'Noto Serif KR', serif;
+      min-width: 3.2rem; text-align: center;
+    }
+    #btn-done-prev, #btn-done-next {
+      background: none; border: 1px solid #d4c9b8;
+      color: #9a8a6e; width: 30px; height: 30px;
+      border-radius: 50%; cursor: pointer;
+      font-size: 1rem; display: flex;
+      align-items: center; justify-content: center; padding: 0;
+      font-family: inherit; flex-shrink: 0;
+      transition: all .2s;
+    }
+    #btn-done-prev:hover, #btn-done-next:hover {
+      background: #9a8a6e; border-color: #9a8a6e; color: #fff;
+    }
 
     /* ── 나의 기록 버튼 ── */
     #btn-history {
@@ -432,7 +476,7 @@
     }
     .cal-nav-title {
       font-size: .95rem; color: #4a3f35;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Serif KR', serif;
       font-weight: 600; letter-spacing: .05em;
     }
     .cal-nav-btn {
@@ -461,12 +505,17 @@
     .cal-cell.empty { background: none; }
     .cal-cell.today { border: 1px solid #c8b99a; color: #7a6a55; font-weight: 600; }
     .cal-cell.has-mission {
-      background: #9a8a6e; color: #fff;
-      cursor: pointer; font-weight: 600;
+      cursor: pointer; font-weight: 700;
+      color: #4a3f35;
     }
-    .cal-cell.has-mission:hover { background: #7a6a55; }
+    .cal-cell.has-mission:hover { background: #f0ebe3; }
+    .cal-cell.has-mission.selected {
+      background: #9a8a6e; color: #fff;
+    }
+    .cal-cell.has-mission.selected.sun { background: #e0a090; }
+    .cal-cell.today.selected { border-color: transparent; }
     .cal-cell.sun { color: #e0856a; }
-    .cal-cell.has-mission.sun { background: #e0a090; color: #fff; }
+    .cal-cell.has-mission.sun { color: #d06050; }
     .cal-stats {
       margin-top: 1rem; padding: .9rem 1rem;
       background: #fff; border: 1px solid #ede6da;
@@ -513,7 +562,7 @@
     .streak-emoji { font-size: 3.2rem; display: block; margin-bottom: .6rem; }
     .streak-title {
       font-size: 1.4rem; font-weight: 600; color: #4a3f35;
-      font-family: 'Cormorant Garamond', serif; letter-spacing: .03em;
+      font-family: 'Noto Serif KR', serif; letter-spacing: .03em;
     }
     .streak-sub {
       font-size: .88rem; color: #9a8a6e; margin-top: .4rem;
@@ -550,7 +599,7 @@
     }
     .fav-picker-title {
       font-size: 1rem; font-weight: 600;
-      color: #4a3f35; font-family: 'Cormorant Garamond', serif;
+      color: #4a3f35; font-family: 'Noto Serif KR', serif;
       letter-spacing: .03em; margin-bottom: .35rem;
     }
     .fav-picker-sub {
@@ -576,7 +625,7 @@
     .fav-picker-author {
       font-size: .78rem; color: #bbb0a0;
       font-style: italic; margin-top: .35rem;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Serif KR', serif;
     }
     .fav-picker-actions {
       padding: .9rem 1.8rem 1.2rem;
@@ -598,7 +647,7 @@
     .monthly-fav-label {
       font-size: .7rem; letter-spacing: .2em;
       text-transform: uppercase; color: #9a6a20;
-      font-family: 'Cormorant Garamond', serif; margin-bottom: .5rem;
+      font-family: 'Noto Serif KR', serif; margin-bottom: .5rem;
     }
     .monthly-fav-text {
       font-size: .9rem; line-height: 1.7;
@@ -607,7 +656,7 @@
     .monthly-fav-author {
       font-size: .78rem; color: #bbb0a0;
       font-style: italic; margin-top: .4rem;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Noto Serif KR', serif;
     }
     .monthly-fav-pick { margin-top: .8rem; text-align: center; }
     .btn-pick-fav {
@@ -637,6 +686,47 @@
       from { opacity: 1; }
       to   { opacity: 0; }
     }
+
+    /* ── 이 명언 또 보기 모달 ── */
+    .reshow-overlay {
+      position: fixed; inset: 0; z-index: 600;
+      background: rgba(44,40,37,.45);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      animation: toastIn .25s ease;
+    }
+    .reshow-box {
+      background: #fff; border-radius: 14px;
+      padding: 2rem 2.2rem 1.6rem; max-width: 320px; width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,.16);
+    }
+    .reshow-emoji { font-size: 2.4rem; display: block; margin-bottom: .55rem; }
+    .reshow-title {
+      font-size: 1rem; font-weight: 600;
+      color: #4a3f35; font-family: 'Noto Serif KR', serif;
+      margin-bottom: .4rem; letter-spacing: .02em;
+    }
+    .reshow-sub {
+      font-size: .82rem; color: #9a8a6e;
+      font-family: 'Noto Serif KR', serif;
+      line-height: 1.7; margin-bottom: 1.4rem;
+    }
+    .reshow-actions { display: flex; gap: .7rem; justify-content: center; }
+    .btn-reshow-yes {
+      background: #7a6a55; border: none; color: #fff;
+      border-radius: 50px; padding: .52rem 1.4rem;
+      font-size: .88rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif; transition: background .2s;
+    }
+    .btn-reshow-yes:hover { background: #5e5040; border: none; color: #fff; }
+    .btn-reshow-no {
+      background: none; border: 1px solid #d4c9b8; color: #9a8a6e;
+      border-radius: 50px; padding: .52rem 1.4rem;
+      font-size: .88rem; cursor: pointer;
+      font-family: 'Noto Serif KR', serif;
+    }
+    .btn-reshow-no:hover { border-color: #9a8a6e; color: #7a6a55; background: none; }
   </style>
 </head>
 <body>
@@ -674,6 +764,16 @@
 
   <div class="mission-container" id="mission-container"></div>
 
+  <div id="all-done-banner" style="display:none" class="all-done-banner">
+    <span class="all-done-emoji">🏆</span>
+    <div class="all-done-text">오늘 할 수 있는 미션을 다 끝냈어요!<br>오늘 하루도 정말 수고했어요.</div>
+    <div class="all-done-nav">
+      <button id="btn-done-prev">‹</button>
+      <span class="all-done-nav-label" id="done-nav-label">1 / 3</span>
+      <button id="btn-done-next">›</button>
+    </div>
+  </div>
+
   <div class="progress-bar-wrap">
     <div class="progress-bar-track">
       <div class="progress-bar-fill" id="progress-fill"></div>
@@ -683,6 +783,7 @@
 
   <div class="controls">
     <button id="btn-random">다른 명언 보기</button>
+    <button id="btn-extra" style="display:none">추가 미션 하기</button>
   </div>
 
   <script src="data.js"></script>
@@ -721,6 +822,41 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
   }
   let doneMap = loadDone();
+  let todayDoneNavIdx = 0;
+
+  function getTodayDoneIdxs() {
+    const t = today();
+    return Object.entries(doneMap)
+      .filter(([, v]) => v && DIFFS.some(d => v[d.key] && v[d.key].date === t))
+      .map(([idx]) => parseInt(idx));
+  }
+  function countTodayDone() { return getTodayDoneIdxs().length; }
+  function isAllDoneToday() { return countTodayDone() >= 3; }
+  function isCurrentDoneToday() {
+    const t = today();
+    const v = doneMap[current];
+    return !!(v && DIFFS.some(d => v[d.key] && v[d.key].date === t));
+  }
+  // 현재 명언이 오늘 완료됐고 아직 3개 미만인 경우 → 잠금(추가 미션 유도)
+  function isLocked() { return isCurrentDoneToday() && !isAllDoneToday(); }
+  // 스와이프/드래그 차단 여부: 현재 명언이 오늘 완료된 경우
+  function isNavBlocked() { return isCurrentDoneToday(); }
+
+  function updateNavState() {
+    const allDone = isAllDoneToday();
+    const locked  = isLocked();
+    document.getElementById('btn-random').style.display = (!locked && !allDone) ? '' : 'none';
+    document.getElementById('btn-extra').style.display  = locked ? '' : 'none';
+    const banner = document.getElementById('all-done-banner');
+    if (banner) banner.style.display = allDone ? '' : 'none';
+    if (allDone) {
+      const idxs = getTodayDoneIdxs();
+      const pos = idxs.indexOf(current);
+      todayDoneNavIdx = pos >= 0 ? pos : 0;
+      const label = document.getElementById('done-nav-label');
+      if (label) label.textContent = (todayDoneNavIdx + 1) + ' / ' + idxs.length;
+    }
+  }
 
   const SELECTED_KEY = 'quote_selected_v1';
   function loadSelected() {
@@ -738,6 +874,23 @@
   }
   function saveMonthlyFav(obj) { localStorage.setItem(MONTHLY_FAV_KEY, JSON.stringify(obj)); }
   let monthlyFav = loadMonthlyFav();
+
+  const RESHOW_KEY = 'quote_reshow_v1';
+  function loadReshow() {
+    try { return new Set(JSON.parse(localStorage.getItem(RESHOW_KEY))?.[getYM()] || []); }
+    catch { return new Set(); }
+  }
+  function addToReshow(idx) {
+    try {
+      const raw = JSON.parse(localStorage.getItem(RESHOW_KEY)) || {};
+      const ym = getYM();
+      if (!raw[ym]) raw[ym] = [];
+      if (!raw[ym].includes(idx)) raw[ym].push(idx);
+      localStorage.setItem(RESHOW_KEY, JSON.stringify(raw));
+      reshowSet.add(idx);
+    } catch {}
+  }
+  let reshowSet = loadReshow();
 
   function getFavPrompted() {
     try { return JSON.parse(localStorage.getItem(FAV_PROMPTED_KEY)) || []; }
@@ -781,15 +934,22 @@
   // ── 랜덤 시작 — 이번 달 미완료 항목 중에서 랜덤 ──
   function pickRandom() {
     const doneThisMonth = new Set(getCompletedForMonth(getYM()));
-    const available = quotes.reduce((arr, _, i) => { if (!doneThisMonth.has(i)) arr.push(i); return arr; }, []);
-    const pool = available.length > 0 ? available : quotes.map((_, i) => i); // 전부 완료 시 전체에서 선택
+    const available = quotes.reduce((arr, _, i) => {
+      if (!doneThisMonth.has(i)) { arr.push(i); return arr; }
+      // reshow 등록 + 미완료 난이도 있으면 pool에 포함
+      if (reshowSet.has(i) && DIFFS.some(d => !getDiffEntry(i, d.key))) arr.push(i);
+      return arr;
+    }, []);
+    const pool = available.length > 0 ? available : quotes.map((_, i) => i);
     const last = parseInt(localStorage.getItem(LAST_KEY) ?? '-1');
     const candidates = pool.filter(i => i !== last);
     const next = (candidates.length > 0 ? candidates : pool)[Math.floor(Math.random() * (candidates.length > 0 ? candidates : pool).length)];
     localStorage.setItem(LAST_KEY, next);
     return next;
   }
-  let current = pickRandom();
+  const _todayDoneIdxs = getTodayDoneIdxs();
+  let current = (_todayDoneIdxs.length > 0) ? _todayDoneIdxs[0] : pickRandom();
+  if (_todayDoneIdxs.length > 0) localStorage.setItem(LAST_KEY, current);
 
   // ── 타이틀 ──
   const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
@@ -814,15 +974,21 @@
     document.getElementById('done-badge').textContent = done;
   }
 
-  // ── 미션 3개 렌더링 ──
+  // ── 미션 렌더링 ──
   function renderMissions(idx) {
     const q = quotes[idx];
 
-    // 완료된 난이도 찾기 (최대 1개)
-    const doneDiff = DIFFS.find(d => !!getDiffEntry(idx, d.key));
+    // reshow 모드: 이 명언이 reshowSet에 있고 미완료 난이도가 남아 있는 경우
+    const uncompletedDiffs = DIFFS.filter(d => !getDiffEntry(idx, d.key));
+    const isReshow = reshowSet.has(idx) && uncompletedDiffs.length > 0;
+
+    // 완료된 난이도 찾기 (reshow 모드면 무시 — 미완료 난이도를 새로 선택)
+    const doneDiff = isReshow ? null : DIFFS.find(d => !!getDiffEntry(idx, d.key));
     // 선택됐지만 아직 완료 전인 난이도 찾기
     const selKey   = !doneDiff ? (selectedMap[idx] || null) : null;
-    const activeDiff = doneDiff || (selKey ? DIFFS.find(d => d.key === selKey) : null);
+    // reshow면 미완료 난이도 pool, 아니면 전체
+    const diffPool = isReshow ? uncompletedDiffs : DIFFS;
+    const activeDiff = doneDiff || (selKey ? diffPool.find(d => d.key === selKey) : null);
 
     if (activeDiff) {
       // 선택된 미션 하나만 표시
@@ -842,7 +1008,7 @@
                 <span class="difficulty-badge ${d.cls}">${d.label}</span>
               </div>
               <div class="mission-text">${q.missions[d.key]}</div>
-              <div class="note-display" id="note-display-${d.key}" style="${(emoji || note) ? '' : 'display:none'}">${noteDisplay}</div>
+              <div class="note-display" id="note-display-${d.key}" style="${(emoji || note) ? 'display:block' : 'display:none'}">${noteDisplay}</div>
             </div>
             <div class="btn-group-col">
               <button class="btn-done ${isDone ? 'done locked' : ''}" id="btn-done-${d.key}" data-diff="${d.key}">${isDone ? '완료 ✓' : '완료'}</button>
@@ -865,13 +1031,24 @@
 
       document.getElementById('btn-done-' + d.key).addEventListener('click', () => {
         if (!!getDiffEntry(idx, d.key)) return; // 이미 완료 — 잠금
+        const isThirdMission = countTodayDone() === 2;
         setDiffEntry(idx, d.key, { date: today(), note: '' });
         updateProgress();
         renderMissions(idx);
+        updateNavState();
         openNoteArea(d.key);
-        const streak = getCurrentStreak();
-        if (streak >= 3) showStreakCelebration(streak);
-        setTimeout(checkLastDayFavorite, 1500);
+        if (isThirdMission) {
+          setTimeout(showAllDoneCelebration, 400);
+        } else {
+          const streak = getCurrentStreak();
+          if (streak >= 3) showStreakCelebration(streak);
+          // 일반 완료 시(reshow 아님)에만 "또 보기" 모달 표시
+          if (!isReshow) {
+            const _left = DIFFS.filter(d => !getDiffEntry(idx, d.key));
+            if (_left.length > 0) setTimeout(() => showReshowModal(idx), 3000);
+          }
+          setTimeout(checkLastDayFavorite, 1500);
+        }
       });
 
       const cancelSelectBtn = document.getElementById('btn-cancel-select');
@@ -895,8 +1072,8 @@
       });
 
     } else {
-      // 3개 미션 모두 표시 — 각각 선택 버튼
-      missionContainer.innerHTML = DIFFS.map(d => `
+      // diffPool 기준으로 선택 버튼 표시 (일반: 3개, reshow: 미완료만)
+      missionContainer.innerHTML = diffPool.map(d => `
         <div class="mission-row" id="row-${d.key}">
           <div class="mission-row-body">
             <div class="mission-icon">🎯</div>
@@ -911,8 +1088,8 @@
           </div>
         </div>`).join('');
 
-      DIFFS.forEach(d => {
-        document.getElementById('btn-select-' + d.key).addEventListener('click', () => {
+      diffPool.forEach(d => {
+        document.getElementById('btn-select-' + d.key)?.addEventListener('click', () => {
           selectedMap[idx] = d.key;
           saveSelected(selectedMap);
           renderMissions(idx);
@@ -933,16 +1110,19 @@
     document.getElementById('note-area-' + diffKey)?.classList.remove('open');
   }
   function saveNote(idx, diffKey) {
-    const note  = document.getElementById('note-input-' + diffKey).value.trim();
+    const note      = document.getElementById('note-input-' + diffKey).value.trim();
+    const selEmoji  = document.querySelector('#emoji-picker-' + diffKey + ' .emoji-btn.selected')?.dataset.emoji || '';
     const entry = getDiffEntry(idx, diffKey);
     if (entry) {
-      entry.note = note;
+      entry.note  = note;
+      entry.emoji = selEmoji;
       setDiffEntry(idx, diffKey, entry);
     }
     closeNoteArea(diffKey);
     const display = document.getElementById('note-display-' + diffKey);
-    if (note) { display.textContent = note; display.style.display = 'block'; }
-    else       { display.style.display = 'none'; }
+    const displayText = selEmoji ? selEmoji + ' ' + note : note;
+    if (displayText) { display.textContent = displayText; display.style.display = 'block'; }
+    else             { display.style.display = 'none'; }
   }
 
   // ── show ──
@@ -957,6 +1137,7 @@
         infoEl.textContent = q.info;
         renderMissions(index);
         updateProgress();
+        updateNavState();
         card.classList.remove('fade');
         missionContainer.classList.remove('fade');
       }, 400);
@@ -966,6 +1147,7 @@
       infoEl.textContent = q.info;
       renderMissions(index);
       updateProgress();
+      updateNavState();
     }
   }
 
@@ -978,10 +1160,29 @@
     goTo(pickRandom());
   });
 
+  document.getElementById('btn-extra').addEventListener('click', () => {
+    if (isAllDoneToday()) return;
+    goTo(pickRandom());
+  });
+
+  document.getElementById('btn-done-prev').addEventListener('click', () => {
+    const idxs = getTodayDoneIdxs();
+    if (idxs.length === 0) return;
+    todayDoneNavIdx = (todayDoneNavIdx - 1 + idxs.length) % idxs.length;
+    goTo(idxs[todayDoneNavIdx]);
+  });
+  document.getElementById('btn-done-next').addEventListener('click', () => {
+    const idxs = getTodayDoneIdxs();
+    if (idxs.length === 0) return;
+    todayDoneNavIdx = (todayDoneNavIdx + 1) % idxs.length;
+    goTo(idxs[todayDoneNavIdx]);
+  });
+
   // 스와이프
   let touchStartX = 0;
   card.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
   card.addEventListener('touchend', e => {
+    if (isNavBlocked()) return;
     const diff = touchStartX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
   }, { passive: true });
@@ -991,6 +1192,7 @@
   card.addEventListener('mousedown', e => { dragStartX = e.clientX; dragging = true; });
   card.addEventListener('mouseup', e => {
     if (!dragging) return; dragging = false;
+    if (isNavBlocked()) return;
     const diff = dragStartX - e.clientX;
     if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
   });
@@ -1138,7 +1340,7 @@
     const pad = n => String(n).padStart(2, '0');
     const prefix = `${y}-${pad(m+1)}-`;
 
-    // 날짜 → [{idx, diffKey, note}]
+    // 날짜 → [{idx, diffKey, note, emoji}]
     const monthDone = {};
     Object.entries(doneMap).forEach(([idx, v]) => {
       if (!v) return;
@@ -1147,7 +1349,7 @@
         if (entry && entry.date && entry.date.startsWith(prefix)) {
           const dd = entry.date.slice(-2);
           if (!monthDone[dd]) monthDone[dd] = [];
-          monthDone[dd].push({ idx: parseInt(idx), diffKey: d.key, note: entry.note || '' });
+          monthDone[dd].push({ idx: parseInt(idx), diffKey: d.key, note: entry.note || '', emoji: entry.emoji || '' });
         }
       });
     });
@@ -1165,7 +1367,7 @@
       const isSun   = new Date(y, m, d).getDay() === 0;
       const has     = !!monthDone[dd];
       let cls = 'cal-cell' + (has ? ' has-mission' : '') + (isToday ? ' today' : '') + (isSun && !has ? ' sun' : '');
-      cells.push(`<div class="${cls}"${has ? ` data-dd="${dd}"` : ''}>${d}</div>`);
+      cells.push(`<div class="${cls}" data-dd="${dd}">${d}</div>`);
     }
 
     const statsMsg = doneCount === 0
@@ -1208,35 +1410,56 @@
     const pickFavBtn = document.getElementById('btn-pick-fav');
     if (pickFavBtn) pickFavBtn.addEventListener('click', () => showFavoritePicker(ym, completedIdxsForCal));
 
+    function renderCalDetail(dd) {
+      const dateStr = `${y}-${pad(m+1)}-${dd}`;
+      const items = monthDone[dd];
+      const detailEl = document.getElementById('cal-detail');
+      if (!items) { detailEl.innerHTML = ''; return; }
+      detailEl.innerHTML = `
+        <div class="cal-detail-date">${dateStr}</div>
+        ${items.map(({ idx, diffKey, note, emoji }) => {
+          const noteDisplay = emoji ? emoji + ' ' + note : note;
+          return `
+          <div class="history-item" style="border-left-color:${diffKey==='easy'?'#8ab88a':diffKey==='normal'?'#c8a060':'#c08080'}; margin-bottom:.5rem">
+            <div class="history-item-header">
+              <div class="history-item-top">
+                <div class="history-item-quote">${quotes[idx].text}</div>
+                <div class="history-item-chevron">▼</div>
+              </div>
+              <div class="history-item-meta">
+                <div class="history-item-author">— ${quotes[idx].author}</div>
+                <span class="difficulty-badge ${diffCls(diffKey)}">${diffLabel(diffKey)}</span>
+              </div>
+              ${noteDisplay ? `<div class="history-item-note">${noteDisplay}</div>` : ''}
+            </div>
+            <div class="history-item-mission">🎯 ${quotes[idx].missions[diffKey]}</div>
+          </div>`;
+        }).join('')}`;
+      detailEl.querySelectorAll('.history-item-header').forEach(h => {
+        h.addEventListener('click', () => h.closest('.history-item').classList.toggle('expanded'));
+      });
+    }
+
+    function selectCalCell(dd) {
+      tabCal.querySelectorAll('.cal-cell.selected').forEach(c => c.classList.remove('selected'));
+      const cell = tabCal.querySelector(`.cal-cell[data-dd="${dd}"]`);
+      if (cell) cell.classList.add('selected');
+      renderCalDetail(dd);
+    }
+
     tabCal.querySelectorAll('.cal-cell.has-mission').forEach(cell => {
       cell.addEventListener('click', () => {
-        const dd = cell.dataset.dd;
-        const dateStr = `${y}-${pad(m+1)}-${dd}`;
-        const items = monthDone[dd];
-        document.getElementById('cal-detail').innerHTML = `
-          <div class="cal-detail-date">${dateStr}</div>
-          ${items.map(({ idx, diffKey, note }) => `
-            <div class="history-item" style="border-left-color:${diffKey==='easy'?'#8ab88a':diffKey==='normal'?'#c8a060':'#c08080'}; margin-bottom:.5rem">
-              <div class="history-item-header">
-                <div class="history-item-top">
-                  <div class="history-item-quote">${quotes[idx].text}</div>
-                  <div class="history-item-chevron">▼</div>
-                </div>
-                <div class="history-item-meta">
-                  <div class="history-item-author">— ${quotes[idx].author}</div>
-                  <span class="difficulty-badge ${diffCls(diffKey)}">${diffLabel(diffKey)}</span>
-                </div>
-                ${note ? `<div class="history-item-note">${note}</div>` : ''}
-              </div>
-              <div class="history-item-mission">🎯 ${quotes[idx].missions[diffKey]}</div>
-            </div>
-          `).join('')}`;
-        document.getElementById('cal-detail').querySelectorAll('.history-item-header').forEach(h => {
-          h.addEventListener('click', () => h.closest('.history-item').classList.toggle('expanded'));
-        });
+        selectCalCell(cell.dataset.dd);
         cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
     });
+
+    // 오늘 날짜 자동 선택
+    const nowY = new Date().getFullYear(), nowM = new Date().getMonth();
+    if (y === nowY && m === nowM) {
+      const todayDD = pad(new Date().getDate());
+      selectCalCell(todayDD);
+    }
 
     document.getElementById('cal-prev').addEventListener('click', () => {
       calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
@@ -1287,6 +1510,56 @@
     </div>`;
     document.body.appendChild(overlay);
     setTimeout(() => overlay.remove(), 2700);
+  }
+
+  function showAllDoneCelebration() {
+    const colors = ['#e8c46a','#c8b99a','#8ab88a','#90b4e0','#e0a090','#c8a0d0','#9a8a6e'];
+    for (let i = 0; i < 120; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      const size = 6 + Math.random() * 9;
+      p.style.cssText = `left:${Math.random()*100}vw;width:${size}px;height:${size}px;` +
+        `background:${colors[Math.floor(Math.random()*colors.length)]};` +
+        `animation-duration:${1.6 + Math.random()*2}s;animation-delay:${Math.random()*.6}s`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }
+    const ol = document.createElement('div');
+    ol.className = 'streak-overlay';
+    ol.innerHTML = `<div class="streak-msg">
+      <span class="streak-emoji">🏆</span>
+      <div class="streak-title">오늘 미션 완료!</div>
+      <div class="streak-sub">하루 3개의 미션을 모두 끝냈어요.<br>오늘 하루도 정말 수고했어요!</div>
+    </div>`;
+    document.body.appendChild(ol);
+    setTimeout(() => ol.remove(), 2900);
+  }
+
+  function showReshowModal(idx) {
+    // 이미 reshowSet에 있거나 모든 난이도 완료 시 표시 안함
+    if (reshowSet.has(idx)) return;
+    if (DIFFS.every(d => !!getDiffEntry(idx, d.key))) return;
+    document.getElementById('reshow-modal')?.remove();
+    const modal = document.createElement('div');
+    modal.id = 'reshow-modal';
+    modal.className = 'reshow-overlay';
+    modal.innerHTML = `
+      <div class="reshow-box">
+        <span class="reshow-emoji">💭</span>
+        <div class="reshow-title">이 명언 또 보기</div>
+        <div class="reshow-sub">마음에 드는 명언인가요?<br>다른 난이도로 이달에 다시 도전할 수 있어요.</div>
+        <div class="reshow-actions">
+          <button class="btn-reshow-yes" id="btn-reshow-yes">또 보기</button>
+          <button class="btn-reshow-no" id="btn-reshow-no">닫기</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    document.getElementById('btn-reshow-yes').addEventListener('click', () => {
+      addToReshow(idx);
+      modal.remove();
+    });
+    document.getElementById('btn-reshow-no').addEventListener('click', () => modal.remove());
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
   }
 
   // ── 월 대표 명언 ──
@@ -1370,6 +1643,7 @@
   // ── 초기 실행 ──
   show(current, false);
   checkNewMonthFavorite();
+  // updateNavState는 show() 내부에서 호출됨
   </script>
 </body>
 </html>
