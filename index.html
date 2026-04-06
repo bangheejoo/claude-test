@@ -1059,22 +1059,22 @@
         updateProgress();
         renderMissions(idx);
         updateNavState();
-        openNoteArea(d.key);
+        const _left = !isReshow ? DIFFS.filter(d => !getDiffEntry(idx, d.key)) : [];
+        const willShowReshow = !isReshow && _left.length > 0;
+        // 모달이 뜰 경우 포커스 건너뜀 — 모달 닫힌 후 포커스
+        openNoteArea(d.key, willShowReshow);
+        const focusNote = () => document.getElementById('note-input-' + d.key)?.focus();
         if (isThirdMission) {
-          // 또 보기 창 먼저, 닫으면 축하 애니메이션
-          const _left = DIFFS.filter(d => !getDiffEntry(idx, d.key));
-          if (!isReshow && _left.length > 0) {
-            showReshowModal(idx, () => setTimeout(showAllDoneCelebration, 300));
+          if (willShowReshow) {
+            showReshowModal(idx, () => { focusNote(); setTimeout(showAllDoneCelebration, 300); });
           } else {
             setTimeout(showAllDoneCelebration, 400);
           }
         } else {
           const streak = getCurrentStreak();
           if (streak >= 3) showStreakCelebration(streak);
-          // 일반 완료 시(reshow 아님)에만 "또 보기" 모달 표시
-          if (!isReshow) {
-            const _left = DIFFS.filter(d => !getDiffEntry(idx, d.key));
-            if (_left.length > 0) showReshowModal(idx);
+          if (willShowReshow) {
+            showReshowModal(idx, focusNote);
           }
           setTimeout(checkLastDayFavorite, 1500);
         }
@@ -1130,13 +1130,13 @@
     }
   }
 
-  function openNoteArea(diffKey) {
+  function openNoteArea(diffKey, skipFocus = false) {
     const area  = document.getElementById('note-area-' + diffKey);
     const input = document.getElementById('note-input-' + diffKey);
     const entry = getDiffEntry(current, diffKey);
     input.value = (entry && entry.note) ? entry.note : '';
     area.classList.add('open');
-    input.focus();
+    if (!skipFocus) input.focus();
   }
   function closeNoteArea(diffKey) {
     document.getElementById('note-area-' + diffKey)?.classList.remove('open');
