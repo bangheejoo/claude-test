@@ -727,6 +727,16 @@
       font-family: 'Noto Serif KR', serif;
     }
     .btn-reshow-no:hover { border-color: #9a8a6e; color: #7a6a55; background: none; }
+    .btn-reshow-hint {
+      flex-shrink: 0;
+      border: 1px solid #c8b99a; color: #9a6a20;
+      padding: .28rem .75rem; font-size: .72rem;
+      border-radius: 50px; cursor: pointer;
+      background: #fdf6e3; transition: all .2s;
+      white-space: nowrap; font-family: 'Noto Serif KR', serif;
+      align-self: flex-start; margin-top: .1rem;
+    }
+    .btn-reshow-hint:hover { background: #9a6a20; border-color: #9a6a20; color: #fff; }
   </style>
 </head>
 <body>
@@ -978,12 +988,14 @@
   function renderMissions(idx) {
     const q = quotes[idx];
 
-    // reshow 모드: 이 명언이 reshowSet에 있고 미완료 난이도가 남아 있는 경우
+    // reshow 모드: reshowSet 등록 + 미완료 난이도 존재 + 오늘 전체 완료 아닌 경우
     const uncompletedDiffs = DIFFS.filter(d => !getDiffEntry(idx, d.key));
-    const isReshow = reshowSet.has(idx) && uncompletedDiffs.length > 0;
+    const isReshow = reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday();
 
-    // 완료된 난이도 찾기 (reshow 모드면 무시 — 미완료 난이도를 새로 선택)
-    const doneDiff = isReshow ? null : DIFFS.find(d => !!getDiffEntry(idx, d.key));
+    // 완료된 난이도 찾기 (reshow 모드면 무시)
+    // 전체완료 탐색 시엔 오늘 완료한 diff를 우선 표시
+    const todayDiff = DIFFS.find(d => { const e = getDiffEntry(idx, d.key); return e && e.date === today(); });
+    const doneDiff = isReshow ? null : (todayDiff || DIFFS.find(d => !!getDiffEntry(idx, d.key)));
     // 선택됐지만 아직 완료 전인 난이도 찾기
     const selKey   = !doneDiff ? (selectedMap[idx] || null) : null;
     // reshow면 미완료 난이도 pool, 아니면 전체
@@ -1013,6 +1025,7 @@
             <div class="btn-group-col">
               <button class="btn-done ${isDone ? 'done locked' : ''}" id="btn-done-${d.key}" data-diff="${d.key}">${isDone ? '완료 ✓' : '완료'}</button>
               ${!isDone ? `<button class="btn-cancel" id="btn-cancel-select" data-diff="${d.key}">취소</button>` : ''}
+              ${isDone && !reshowSet.has(idx) && uncompletedDiffs.length > 0 && !isAllDoneToday() ? `<button class="btn-reshow-hint" id="btn-reshow-hint">💭 또 보기</button>` : ''}
             </div>
           </div>
           <div class="note-area" id="note-area-${d.key}">
@@ -1042,10 +1055,10 @@
         } else {
           const streak = getCurrentStreak();
           if (streak >= 3) showStreakCelebration(streak);
-          // 일반 완료 시(reshow 아님)에만 "또 보기" 모달 표시
+          // 일반 완료 시(reshow 아님)에만 "또 보기" 모달 즉시 표시
           if (!isReshow) {
             const _left = DIFFS.filter(d => !getDiffEntry(idx, d.key));
-            if (_left.length > 0) setTimeout(() => showReshowModal(idx), 3000);
+            if (_left.length > 0) showReshowModal(idx);
           }
           setTimeout(checkLastDayFavorite, 1500);
         }
@@ -1058,6 +1071,9 @@
         renderMissions(idx);
         updateProgress();
       });
+
+      const reshowHintBtn = document.getElementById('btn-reshow-hint');
+      if (reshowHintBtn) reshowHintBtn.addEventListener('click', () => showReshowModal(idx));
 
       document.querySelectorAll('#emoji-picker-' + d.key + ' .emoji-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1354,7 +1370,8 @@
       });
     });
 
-    const doneCount = Object.values(monthDone).reduce((s, a) => s + a.length, 0);
+    // 같은 명언을 여러 난이도로 완료해도 1개로 계산
+    const doneCount = new Set(Object.values(monthDone).flat().map(e => e.idx)).size;
     const todayStr  = today();
     const firstDay  = new Date(y, m, 1).getDay();
     const daysInMonth = new Date(y, m + 1, 0).getDate();
@@ -1372,7 +1389,7 @@
 
     const statsMsg = doneCount === 0
       ? '이번 달 아직 완료한 미션이 없어요.'
-      : `이번 달 <span class="highlight">${doneCount}번</span>의 미션을 완료했어요!`;
+      : `이번 달 <span class="highlight">${doneCount}개</span>의 명언을 완료했어요!`;
     const isAllDone = doneCount >= TOTAL;
 
     const ym = `${y}-${pad(m+1)}`;
